@@ -76,3 +76,9 @@ mutation createHouse($address: String!, $area: String!, $bathrooms: Int!, $bedro
   
   "Authorization": "JWT dbmFtZSI6InNrYXp1IiwiZXhwIjoxdsadsadsaxOTE0NTU0fQ.F-zz3cC0BGiGsddsaFeMEkcmaw1CyUKol-_Q"
 }
+
+mutation changeUser($firstName: String, $lastName: String,$phone:String,$userId:Int!) {
+  changeUser(firstName: $firstName, lastName: $lastName,phone:$phone,userId:$userId) {
+  user{id,lastName,firstName}
+  }
+}
