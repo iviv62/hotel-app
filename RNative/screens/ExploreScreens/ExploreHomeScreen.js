@@ -1,12 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import Details from './Details';
 
 const ExploreScreen = () => {
-  return (
-    <View style={styles.screen}>
-      <Text>Explore</Text>
-    </View>
-  );
+  return <Details />;
 };
 
 const styles = StyleSheet.create({
