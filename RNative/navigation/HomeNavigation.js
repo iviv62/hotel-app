@@ -8,6 +8,7 @@ import AuthOption from '../screens/AuthScreens/AuthOption';
 import AuthHome from '../screens/AuthScreens/AuthHome';
 import Saved from '../screens/SavedScreens/Saved';
 import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
+import Profile from '../screens/ProfileScreens/Profile';
 
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
@@ -17,7 +18,7 @@ const ProfileStackScreen = () => (
     screenOptions={{
       headerShown: false,
     }}>
-    <ProfileStack.Screen name="AuthOption" component={ProfileNotLogged} />
+    <ProfileStack.Screen name="AuthOption" component={Profile} />
     <ProfileStack.Screen name="AuthHome" component={AuthHome} />
   </ProfileStack.Navigator>
 );
