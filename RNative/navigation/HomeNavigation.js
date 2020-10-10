@@ -2,10 +2,12 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ExploreHomeScreen from '../screens/ExploreScreens/ExploreHomeScreen';
-import SavedScreen from '../screens/SavedScreens/SavedScreen';
+//import SavedScreen from '../screens/SavedScreens/SavedScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthOption from '../screens/AuthScreens/AuthOption';
 import AuthHome from '../screens/AuthScreens/AuthHome';
+import Saved from '../screens/SavedScreens/Saved';
+import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
 
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
@@ -15,7 +17,7 @@ const ProfileStackScreen = () => (
     screenOptions={{
       headerShown: false,
     }}>
-    <ProfileStack.Screen name="AuthOption" component={AuthOption} />
+    <ProfileStack.Screen name="AuthOption" component={ProfileNotLogged} />
     <ProfileStack.Screen name="AuthHome" component={AuthHome} />
   </ProfileStack.Navigator>
 );
@@ -40,7 +42,7 @@ const HomeNavigation = () => {
       />
       <Tab.Screen
         name="Saved"
-        component={SavedScreen}
+        component={Saved}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="ios-heart" color={color} size={26} />
