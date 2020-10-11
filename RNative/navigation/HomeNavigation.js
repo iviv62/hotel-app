@@ -1,11 +1,12 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+//import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+
 import ExploreHomeScreen from '../screens/ExploreScreens/ExploreHomeScreen';
 //import SavedScreen from '../screens/SavedScreens/SavedScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import AuthOption from '../screens/AuthScreens/AuthOption';
-import AuthHome from '../screens/AuthScreens/AuthHome';
+import AuthHome from '../screens/ProfileScreens/AuthHome';
 import Saved from '../screens/SavedScreens/Saved';
 import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
 import Profile from '../screens/ProfileScreens/Profile';
@@ -27,9 +28,6 @@ const HomeNavigation = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        // style: {
-        //   backgroundColor: Colors.mainCombiStyle1,
-        // },
         activeTintColor: '#ffa500',
       }}>
       <Tab.Screen
