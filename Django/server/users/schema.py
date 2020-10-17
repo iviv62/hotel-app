@@ -1,13 +1,16 @@
 from .models import CustomUser,SavedHouses
 from graphql import GraphQLError
+from api.houses.schema import HouseType,House
 import graphene
 from graphene_django import DjangoObjectType
+from graphql import GraphQLError
 
 class UserType(DjangoObjectType):
 
     class Meta:
         model=CustomUser
         exclude=["password",]
+
 
 class SavedHouseType(DjangoObjectType):
 
@@ -21,8 +24,6 @@ class Query(graphene.ObjectType):
 
     def resolve_all_users(self,info,**kwargs):
         return CustomUser.objects.all()
-
-    
 
     def resolve_user(self,info,**kwargs):
         id=kwargs.get("id")
@@ -70,6 +71,31 @@ class UpdateUser(graphene.Mutation):
         user.save()
         return UpdateUser(user=user)
 
+class AddHouseToSaved(graphene.Mutation):
+    user = graphene.Field(UserType)
+    house = graphene.Field(HouseType)
+
+    class Arguments:
+        house_id = graphene.Int(required=True)
+
+    def mutate(self,info, house_id):
+        user=info.context.user
+
+        if user.is_anonymous:
+            raise GraphQLError("Log in to add a house to saved")
+
+        house=House.objects.get(id=house_id)
+        if not house:
+            raise GraphQLError("House id is not valid")
+
+
+        SavedHouses.objects.create(
+                user=user,
+                favourites=house
+            )
+        return AddHouseToSaved(user=user,house=house)
+
+
 
 
 class DeleteUser(graphene.Mutation):
@@ -94,3 +120,4 @@ class Mutation(graphene.ObjectType):
     create_user=CreateUser.Field()
     update_user=UpdateUser.Field()
     delete_user=DeleteUser.Field()
+    save_house=AddHouseToSaved.Field()
