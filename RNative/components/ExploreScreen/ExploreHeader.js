@@ -6,20 +6,8 @@ import IconButton from '../IconButton';
 import {Searchbar} from 'react-native-paper';
 import ExploreList from './ExploreList';
 import ExploreMap from './ExploreMap';
-import Details from '../../screens/ExploreScreens/Details';
 
 const Tab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
-
-const ExploreStackScreen = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}>
-    <Stack.Screen name="ExploreList" component={ExploreList} />
-    <Stack.Screen name="ExploreDetail" component={Details} />
-  </Stack.Navigator>
-);
 
 const ExploreHeader = (props) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -49,7 +37,7 @@ const ExploreHeader = (props) => {
 
           labelStyle: {fontSize: 16, fontWeight: 'bold'},
         }}>
-        <Tab.Screen name="ExploreTab" component={ExploreStackScreen} />
+        <Tab.Screen name="ExploreTab" component={ExploreList} />
         <Tab.Screen name="Map" component={ExploreMap} />
       </Tab.Navigator>
     </View>
