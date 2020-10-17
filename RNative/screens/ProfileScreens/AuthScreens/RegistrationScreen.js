@@ -29,9 +29,7 @@ const RegistrationScreen = () => {
             keyboardType="email-address"
             inputStyle={{color: '#A9A9A9'}}
             returnKeyType="next"
-            onSubmitEditing={() => {
-              this.password.focus();
-            }}
+            
             blurOnSubmit={false}
           />
           <Sae
@@ -48,13 +46,9 @@ const RegistrationScreen = () => {
             keyboardType="default"
             secureTextEntry={true}
             inputStyle={{color: '#A9A9A9'}}
-            ref={(input) => {
-              this.password = input;
-            }}
+            
             returnKeyType="next"
-            onSubmitEditing={() => {
-              this.confirmpassword.focus();
-            }}
+           
             blurOnSubmit={false}
           />
 
@@ -72,9 +66,7 @@ const RegistrationScreen = () => {
             keyboardType="default"
             secureTextEntry={true}
             inputStyle={{color: '#A9A9A9'}}
-            ref={(input) => {
-              this.confirmpassword = input;
-            }}
+           
           />
         </View>
 

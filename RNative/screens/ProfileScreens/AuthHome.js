@@ -24,12 +24,29 @@ const AuthHome = (props) => {
         <View style={styles.imageContainer}>
           <Image source={require('../../images/logo.png')} />
         </View>
+        
       </View>
-
       <View style={styles.tabContainer}>
         <Tab.Navigator
           tabBarOptions={{
-            indicatorStyle: {backgroundColor: '#ffa500'},
+            indicatorStyle: {backgroundColor: '#ffa500',position:"relative"},
+           
+            labelStyle: { fontSize: 16, fontWeight:"bold"},
+            
+            style: {
+              borderBottomLeftRadius: 30,
+              borderBottomRightRadius: 30,
+              
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 4,
+              },
+              shadowOpacity: 0.32,
+              shadowRadius: 5.46,
+              elevation: 9,
+              
+            },
           }}>
           <Tab.Screen name="Login" component={LoginScreen} />
           <Tab.Screen
@@ -40,7 +57,10 @@ const AuthHome = (props) => {
             }}
           />
         </Tab.Navigator>
+        
       </View>
+     
+      
     </View>
   );
 };
@@ -53,17 +73,8 @@ const styles = StyleSheet.create({
 
   header: {
     backgroundColor: 'white',
-    height: '40%',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9,
+    height: '30%',
+
   },
   imageContainer: {
     flex: 1,
@@ -72,6 +83,7 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     flex: 1,
+
   },
 });
 

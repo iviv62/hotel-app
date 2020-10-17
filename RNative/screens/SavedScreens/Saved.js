@@ -2,6 +2,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import SavedCard from '../../components/SavedScreen/SavedCard';
+import CardNotUsed from '../../components/SavedScreen/CardNotUsed'
 
 const Saved = () => {
   return (
@@ -11,6 +12,7 @@ const Saved = () => {
         <SavedCard />
         <SavedCard />
         <SavedCard />
+        <CardNotUsed/>
       </ScrollView>
     </View>
   );

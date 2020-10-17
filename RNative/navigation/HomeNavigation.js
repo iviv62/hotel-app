@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -19,7 +20,7 @@ const ProfileStackScreen = () => (
     screenOptions={{
       headerShown: false,
     }}>
-    <ProfileStack.Screen name="AuthOption" component={Profile} />
+    <ProfileStack.Screen name="AuthOption" component={ProfileNotLogged} />
     <ProfileStack.Screen name="AuthHome" component={AuthHome} />
   </ProfileStack.Navigator>
 );
