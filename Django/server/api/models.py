@@ -1,6 +1,5 @@
 from django.db import models
-from django.db import models
-from users.models import CustomUser
+from django.conf import settings
 
 from mapbox_location_field.models import LocationField
 
@@ -22,15 +21,14 @@ class House(models.Model):
 
     img= models.ImageField(upload_to ='house-images/%Y/%m/%d/')
     created_on = models.DateTimeField(auto_now_add=True)
-    posted_by =models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    posted_by =models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     
     
 
     def __str__(self):
         return self.title
 
-    def desc_preview(self):
-        return self.description[:50]
+    
 
 class Image(models.Model):
     image = models.ImageField(upload_to='house-images/%Y/%m/%d/')

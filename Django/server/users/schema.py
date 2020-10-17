@@ -1,4 +1,4 @@
-from .models import CustomUser
+from .models import CustomUser,SavedHouses
 from graphql import GraphQLError
 import graphene
 from graphene_django import DjangoObjectType
@@ -9,6 +9,11 @@ class UserType(DjangoObjectType):
         model=CustomUser
         exclude=["password",]
 
+class SavedHouseType(DjangoObjectType):
+
+    class Meta:
+        model=SavedHouses
+
 class Query(graphene.ObjectType):
 
     all_users=graphene.List(UserType)
@@ -16,6 +21,8 @@ class Query(graphene.ObjectType):
 
     def resolve_all_users(self,info,**kwargs):
         return CustomUser.objects.all()
+
+    
 
     def resolve_user(self,info,**kwargs):
         id=kwargs.get("id")

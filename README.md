@@ -25,6 +25,28 @@ How to install django backend
   }
 }
 
+{
+  user(id:6){
+    username
+    email
+    savedhousesSet {
+      id
+      favourites{
+        title
+        city
+        description
+        area
+        address
+        bedrooms
+        bathrooms
+        price
+        location
+        
+      }
+    }
+  }
+}
+
 #Mutations
 --
 mutation {
