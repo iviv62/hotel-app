@@ -1,14 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import Details from './Details';
-import ExploreHeader from '../../components/ExploreScreen/ExploreHeader';
+import ExploreNavigation from '../../navigation/ExploreNavigation';
 
-
-
-const ExploreScreen = () => {
-  return (
-    <ExploreHeader/>
-  );
+const ExploreHomeScreen = () => {
+  return <ExploreNavigation />;
 };
 
 const styles = StyleSheet.create({
@@ -19,4 +14,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreScreen;
+export default ExploreHomeScreen;
