@@ -2,8 +2,10 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 export default function DetailsNav() {
+  const navigation = useNavigation();
   const pr = () => {};
 
   return (
@@ -11,7 +13,9 @@ export default function DetailsNav() {
       <TouchableHighlight
         activeOpacity={0.5}
         underlayColor="#DDDDDD"
-        onPress={pr}
+        onPress={() => {
+          navigation.goBack();
+        }}
         style={styles.arrowLeftContainer}>
         <Icon name="arrow-back" color={'#ffa500'} size={30} />
         {/* <Image source={ArrowLeft} style={{ width: 30, height: 30, }} 

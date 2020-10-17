@@ -5,7 +5,7 @@ import DetailsCard from '../../components/DetailsScreen/DetailsCard';
 import AboutDetails from '../../components/DetailsScreen/AboutDetails';
 import DetailsNav from '../../components/DetailsScreen/DetailsNav';
 
-const Details = () => {
+const Details = (props) => {
   return (
     <View style={{flex: 1}}>
       <DetailsNav />
