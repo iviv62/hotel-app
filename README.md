@@ -10,6 +10,7 @@ How to install django backend
 
 #Graphql queery
 --
+```
 {
   allUsers{
     id
@@ -46,9 +47,10 @@ How to install django backend
     }
   }
 }
-
-#Mutations
+```
+##Mutations
 --
+```
 mutation {
   createUser(email: "test@abv.bg", password: "test", username: "ivo") {
     user {
@@ -122,3 +124,4 @@ mutation{
     }
   }
 }
+```

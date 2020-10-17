@@ -16,6 +16,6 @@ class CustomUser(AbstractUser):
 class SavedHouses(models.Model):
 
     user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    favourites = models.ForeignKey(House, on_delete=models.CASCADE ,blank=True,null=True)
+    house = models.ForeignKey(House, on_delete=models.CASCADE ,blank=True,null=True)
 
     

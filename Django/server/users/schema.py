@@ -95,6 +95,27 @@ class AddHouseToSaved(graphene.Mutation):
             )
         return AddHouseToSaved(user=user,house=house)
 
+class DeleteHouseFromSaved(graphene.Mutation):
+    saved_id = graphene.Int()
+
+    class Arguments:
+        saved_id = graphene.Int(required = True)
+    
+    def mutate(self, info ,saved_id):
+        user=info.context.user
+
+        if user.is_anonymous:
+            raise GraphQLError("Log in to remove a house from saved")
+
+        savedHouse=SavedHouses.objects.get(id=saved_id)
+
+        if savedHouse.user!=user:
+            raise GraphQLError("You are not allowed to delete another users saved data")
+
+        savedHouse.delete()
+        return DeleteHouseFromSaved(saved_id=saved_id)
+
+
 
 
 
@@ -109,7 +130,7 @@ class DeleteUser(graphene.Mutation):
         idUser=user_id
         user=CustomUser.objects.get(id=user_id)
         user_request=info.context.user
-        print(user)
+       
 
         if user != user_request:
            raise GraphQLError("Cant delete the data of other users")
@@ -121,3 +142,4 @@ class Mutation(graphene.ObjectType):
     update_user=UpdateUser.Field()
     delete_user=DeleteUser.Field()
     save_house=AddHouseToSaved.Field()
+    delete_saved_house=DeleteHouseFromSaved.Field()
