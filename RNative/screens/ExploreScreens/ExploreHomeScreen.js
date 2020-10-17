@@ -1,9 +1,14 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Details from './Details';
+import ExploreHeader from '../../components/ExploreScreen/ExploreHeader';
+
+
 
 const ExploreScreen = () => {
-  return <Details />;
+  return (
+    <ExploreHeader/>
+  );
 };
 
 const styles = StyleSheet.create({
