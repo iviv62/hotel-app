@@ -104,3 +104,21 @@ mutation changeUser($firstName: String, $lastName: String,$phone:String,$userId:
   user{id,lastName,firstName}
   }
 }
+
+mutation{
+	saveHouse(houseId:3){
+    user{
+      id
+      username
+      email
+    }
+    house{
+      id
+      title
+      price
+      address
+      bathrooms
+      bedrooms
+    }
+  }
+}

@@ -3,6 +3,8 @@ from graphene_django import DjangoObjectType
 from api.models import House,Image
 from graphql import GraphQLError
 
+
+
 class HouseType(DjangoObjectType):
 
     class Meta:
