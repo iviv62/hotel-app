@@ -1,66 +1,69 @@
-import React from 'react'
-import { StyleSheet, Text, View, TextInput } from 'react-native'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
-import IconButton from "../IconButton"
-import { Searchbar } from 'react-native-paper';
-import ExploreList from "./ExploreList";
-import ExploreMap from "./ExploreMap";
-
-
-
+import React from 'react';
+import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import IconButton from '../IconButton';
+import {Searchbar} from 'react-native-paper';
+import ExploreList from './ExploreList';
+import ExploreMap from './ExploreMap';
+import Details from '../../screens/ExploreScreens/Details';
 
 const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 
+const ExploreStackScreen = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="ExploreList" component={ExploreList} />
+    <Stack.Screen name="ExploreDetail" component={Details} />
+  </Stack.Navigator>
+);
 
+const ExploreHeader = (props) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
 
-const ExploreHeader = () => {
-    const [searchQuery, setSearchQuery] = React.useState('');
+  const onChangeSearch = (query) => setSearchQuery(query);
 
-    const onChangeSearch = query => setSearchQuery(query);
-
-
-    return (
-        <View style={styles.header}>
-        <View style={styles.searchContainer}>
+  return (
+    <View style={styles.header}>
+      <View style={styles.searchContainer}>
         <Searchbar
-        placeholder="Search"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        style={{fontSize: 12, elevation: 0,flex:1}}
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={{fontSize: 12, elevation: 0, flex: 1}}
         />
-        <IconButton name="filter-alt" size={25} color="#000000" />
-        </View>
+        <IconButton
+          name="filter-alt"
+          size={25}
+          color="#000000"
+          onSelect={() => props.navigation.navigate('Filter')}
+        />
+      </View>
 
-       
-        
-        <Tab.Navigator
-          tabBarOptions={{
-            indicatorStyle: {backgroundColor: '#ffa500'},
-           
-            labelStyle: { fontSize: 16, fontWeight:"bold"},
-            
-          }}>
-          <Tab.Screen name="List" component={ExploreList} />
-          <Tab.Screen
-            name="Map"
-            component={ExploreMap}
-          />
-        </Tab.Navigator>
+      <Tab.Navigator
+        tabBarOptions={{
+          indicatorStyle: {backgroundColor: '#ffa500'},
 
-        </View>
-    )
-}
+          labelStyle: {fontSize: 16, fontWeight: 'bold'},
+        }}>
+        <Tab.Screen name="ExploreTab" component={ExploreStackScreen} />
+        <Tab.Screen name="Map" component={ExploreMap} />
+      </Tab.Navigator>
+    </View>
+  );
+};
 
-export default ExploreHeader
+export default ExploreHeader;
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: "white",
-        flex:1,
-    },
-    searchContainer:{
-        flexDirection:"row"
-      
-    },
-})
+  header: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+  },
+});
