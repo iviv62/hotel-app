@@ -2,6 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from api.models import House,Image
 from graphql import GraphQLError
+from server.settings import MEDIA_URL
 
 
 
@@ -10,11 +11,18 @@ class HouseType(DjangoObjectType):
     class Meta:
         model=House
 
+    
+
 class ImageType(DjangoObjectType):
 
     class Meta:
         model=Image
 
+    def resolve_image(self,info):
+        if self.image:
+            self.image = info.context.build_absolute_uri(self.image.url)
+        return self.image
+        
 class Query(graphene.ObjectType):
     all_houses=graphene.List(HouseType)
     house=graphene.Field(HouseType, id=graphene.Int())

@@ -19,7 +19,7 @@ class House(models.Model):
     location = LocationField(null=True)
     city = models.CharField(max_length=300,null=True)
 
-    img= models.ImageField(upload_to ='house-images/%Y/%m/%d/')
+
     created_on = models.DateTimeField(auto_now_add=True)
     posted_by =models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     
