@@ -4,7 +4,7 @@ import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 
-export default function DetailsNav() {
+export default function DetailsNav({title}) {
   const navigation = useNavigation();
   const pr = () => {};
 
@@ -22,7 +22,7 @@ export default function DetailsNav() {
                 
                 /> */}
       </TouchableHighlight>
-      <Text style={styles.title}>Title</Text>
+      <Text style={styles.title}>{title}</Text>
       <TouchableHighlight
         activeOpacity={0.5}
         underlayColor="#DDDDDD"

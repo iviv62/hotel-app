@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React,{useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,46 +12,49 @@ import DetailsAdditionalInfo from './DetailsAdditionalInfo';
 import OwnerDetails from './OwnerDetails';
 import Swiper from './Swiper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AboutDetails from '../../components/DetailsScreen/AboutDetails';
 
-const DetailsCard = () => {
+
+const DetailsCard = ({price,bedrooms,bathrooms,floors,title,builtOn,area,scrollRef}) => {
   return (
     <View>
       <Swiper />
       <View style={styles.card}>
         <Text style={styles.title}>
-          Detached House 5y old, 3 Bedrooms and 2 Bathrooms, 2 floors
+        {title}, {bedrooms} Bedrooms, {bathrooms} Bathrooms, {floors} floors
         </Text>
         <View style={styles.line} />
-        <Text style={styles.price}>Price $750,000</Text>
+        <Text style={styles.price}>Price ${price}</Text>
         <View style={styles.line} />
 
         <View style={styles.roomContainer}>
           <View style={styles.roomInfo}>
             <View style={styles.roomIcon}>
-              <Icon name="bed" color={'#ffa500'} size={30} />
+              <Icon name="bed" color={'#ffa500'} size={25} />
             </View>
-            {/* <Image source={bed}
-            style={styles.roomIcon}
-            /> */}
-            <Text style={styles.num}>3</Text>
+            <Text style={styles.num}>{bedrooms}</Text>
             <Text style={styles.room}>Bedrooms</Text>
           </View>
 
           <View style={styles.roomInfo}>
             <View style={styles.roomIcon}>
-              <Icon name="bed" color={'#ffa500'} size={30} />
+              <Icon name="bed" color={'#ffa500'} size={25} />
             </View>
-            {/* <Image source={bath}
-            style={styles.roomIcon}
-            /> */}
-            <Text style={styles.num}>2</Text>
+            <Text style={styles.num}>{bathrooms}</Text>
             <Text style={styles.room}>Bathrooms</Text>
           </View>
         </View>
 
         <View style={styles.line} />
-        <DetailsAdditionalInfo />
+        <DetailsAdditionalInfo
+        builtOn={builtOn}
+        area={area} 
+        floors={floors}
+        />
         <OwnerDetails />
+        <AboutDetails
+        scrollRef={scrollRef}
+        />
       </View>
     </View>
   );

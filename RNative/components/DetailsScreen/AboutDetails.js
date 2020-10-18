@@ -1,49 +1,52 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, Text, View, ScrollView, } from 'react-native';
 
-const AboutDetails = () => {
-  const [setActive, setActivateState] = useState('');
-  const [height, setHeight] = useState('100%');
-  const [rotate, setRotate] = useState();
+import { List } from 'react-native-paper';
 
-  const toggleAcordion = () => {
-    setActivateState(setActive === '' ? 'active' : '');
-    setHeight(setActive === 'active' ? '100%' : '0%');
-  };
+const AboutDetails = ({ scrollRef }) => {
+  const [expanded, setExpanded] = useState(true);
+
+  const test = useRef(null);
+
+  const handlePress = () => {
+    setExpanded(!expanded);
+    setTimeout(() => {
+
+      scrollRef.current.scrollToEnd();
+    }, 300)
+
+  }
+
+
 
   return (
     <View>
-      <View style={styles.line} />
-      <TouchableHighlight onPress={toggleAcordion}>
-        <View style={styles.acordionTitleContainer}>
-          <Text style={styles.title}>About the property</Text>
-          {/* <Image  source={chevron} style={styles.chevron}/> */}
-          <View style={styles.chevron}>
-            <Icon name="chevron-down" color={'#ffa500'} size={30} />
-          </View>
-        </View>
-      </TouchableHighlight>
-      <View>
-        <Text
-          style={{
-            maxHeight: `${height}`,
-            marginHorizontal: 20,
-            flexWrap: 'wrap',
-          }}>
-          Lorem ipsum dolor sit amet consectetur earum.Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Minima eum magnam voluptas optio
-          explicabo deleniti accusantium. Debitis temporibus repellendus illo
-          animi delectus beatae fugit amet sint nihil doloribus, perspiciatis
-          tempore assumenda unde? Aspernatur aut nihil vero quis? Placeat
-          inventore in sint ex. Provident numquam iure iusto obcaecati
-          cupiditate molestias earum.Provident numquam iure iusto obcaecati
-          cupiditate molestias earum.Provident numquam iure iusto obcaecati
-          cupiditate molestias earum.Provident numquam iure iusto obcaecati
-          cupiditate molestias earum.
+
+      <List.Accordion
+
+        title="About the property"
+        titleStyle={styles.title}
+        expanded={expanded}
+        onPress={handlePress}>
+        <ScrollView>
+          <Text style={styles.text}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+            vehicula eros non maximus dapibus. Vivamus vestibulum tempor varius.
+            Maecenas varius vitae nisi in consequat. Integer lectus enim,
+            ullamcorper eu molestie dictum, lacinia egestas turpis. Integer varius
+            interdum cursus. Vivamus elementum justo eu augue tincidunt, vitae
+            semper diam molestie. In hac habitasse platea dictumst. Aenean augue
+            diam, iaculis id porta ut, aliquet in nisl. Morbi molestie tempus
+            convallis. Fusce eget dapibus mauris. Nulla sit amet neque tristique,
+            pulvinar nulla sed, hendrerit tortor. Curabitur laoreet mauris ac
+            aliquam fermentum. Nulla sed euismod augue.
         </Text>
-      </View>
+
+        </ScrollView>
+      </List.Accordion>
+
+
     </View>
   );
 };
@@ -54,25 +57,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: -5,
+    color: "black"
   },
   line: {
     borderBottomColor: '#c4c4c4',
     borderBottomWidth: 0.5,
     marginHorizontal: 10,
   },
-  button: {
-    fontSize: 16,
-    color: 'orange',
-  },
-  acordionTitleContainer: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
-  chevron: {
-    marginLeft: 20,
-    width: 20,
-    height: 20,
-    alignSelf: 'center',
-  },
+  text: {
+    paddingHorizontal: 20,
+
+  }
+
 });

@@ -3,26 +3,26 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 
-const DetailsAdditionalInfo = () => {
+const DetailsAdditionalInfo = ({floors,builtOn,area}) => {
     return (
         <View>
             <Text style={styles.title}>Additional Details</Text>
 
             <View style={styles.infoRow}>
                 <View style={styles.infoColumn} >
-                    <Text style={styles.detailTitle}>Age of property</Text>
-                    <Text style={styles.detailText} >5 years</Text>
+                    <Text style={styles.detailTitle}>Build on</Text>
+                    <Text style={styles.detailText} >{builtOn}</Text>
                 </View>
                 <View style={styles.infoColumn} >
                     <Text style={styles.detailTitle}>Built up Area</Text>
-                    <Text style={styles.detailText} >1342 sq ft.</Text>
+                    <Text style={styles.detailText} >{area}</Text>
                 </View>
             </View>
 
             <View style={styles.infoRow}>
                 <View style={styles.infoColumn} >
                     <Text style={styles.detailTitle}>Floors</Text>
-                    <Text style={styles.detailText} >2</Text>
+                    <Text style={styles.detailText} >{floors}</Text>
                 </View>
                 <View style={styles.infoColumn} >
                     <Text style={styles.detailTitle}>Some other property</Text>
