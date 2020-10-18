@@ -15,7 +15,6 @@ export const ALL_HOUSES = gql`
       address
       location
       city
-      img
       createdOn
       postedBy{
         id
