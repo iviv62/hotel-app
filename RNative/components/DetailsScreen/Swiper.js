@@ -18,7 +18,7 @@ const images = [
   'https://i.picsum.photos/id/1004/5616/3744.jpg?hmac=Or7EJnz-ky5bsKa9_frdDcDCR9VhCP8kMnbZV6-WOrY',
 ];
 
-const Swiper = () => {
+const Swiper = ({images}) => {
   const [active, setActive] = useState(0);
 
   const change = ({nativeEvent}) => {
@@ -39,8 +39,8 @@ const Swiper = () => {
         onScroll={change}
         showsHorizontalScrollIndicator={false}
         style={styles.container}>
-        {images.map((img, index) => (
-          <Image key={index} source={{uri: img}} style={styles.image} />
+        {images.map((item) => (
+          <Image key={item.image} source={{uri: item.image}} style={styles.image} />
         ))}
       </ScrollView>
       <View style={styles.pagination}>

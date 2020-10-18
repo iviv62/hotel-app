@@ -15,10 +15,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AboutDetails from '../../components/DetailsScreen/AboutDetails';
 
 
-const DetailsCard = ({price,bedrooms,bathrooms,floors,title,builtOn,area,scrollRef}) => {
+const DetailsCard = ({
+  price,bedrooms,bathrooms,floors,title,builtOn,area,
+  scrollRef,description,postedBy,images}) => {
   return (
     <View>
-      <Swiper />
+      <Swiper images={images} />
       <View style={styles.card}>
         <Text style={styles.title}>
         {title}, {bedrooms} Bedrooms, {bathrooms} Bathrooms, {floors} floors
@@ -51,9 +53,10 @@ const DetailsCard = ({price,bedrooms,bathrooms,floors,title,builtOn,area,scrollR
         area={area} 
         floors={floors}
         />
-        <OwnerDetails />
+        <OwnerDetails postedBy={postedBy} />
         <AboutDetails
         scrollRef={scrollRef}
+        description={description}
         />
       </View>
     </View>

@@ -3,17 +3,16 @@ import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const OwnerDetails = () => {
+const OwnerDetails = ({postedBy}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Owner Details</Text>
 
       <View style={styles.profileContainer}>
-        {/* <Image source={avatar} style={{width:60, height:60}}/> */}
-        <Icon name="person-circle-outline" color={'#ffa500'} size={30} />
-        <Text style={styles.name}>John Doe</Text>
-        <Text styles={styles.phone}>+359 547 867</Text>
-        <Text styles={styles.email}>Doe@gmail.com</Text>
+        <Icon name="person-circle-outline" color={'#ffa500'} size={60} />
+        <Text style={styles.name}>{postedBy.firstName} {postedBy.lastName}</Text>
+        <Text styles={styles.phone}>{postedBy.phone}</Text>
+        <Text styles={styles.email}>{postedBy.email}</Text>
       </View>
     </View>
   );

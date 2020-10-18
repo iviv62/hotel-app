@@ -26,7 +26,10 @@ const scrollRef=useRef()
         title={route.params.title}
         builtOn={route.params.builtOn}
         area={route.params.area}
+        description={route.params.description}
+        postedBy={route.params.postedBy}
         scrollRef={scrollRef}
+        images={route.params.otherImages}
         
         />
       </ScrollView>

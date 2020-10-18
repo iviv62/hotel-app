@@ -19,6 +19,10 @@ export const ALL_HOUSES = gql`
       createdOn
       postedBy{
         id
+        firstName
+        lastName
+        phone
+        email
       }
       otherImages{
         id
