@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 
 export const ALL_HOUSES = gql`
-{
-    allHouses{
+  {
+    allHouses {
       id
       title
       description
@@ -16,19 +16,29 @@ export const ALL_HOUSES = gql`
       location
       city
       createdOn
-      postedBy{
+      postedBy {
         id
         firstName
         lastName
         phone
         email
       }
-      otherImages{
+      otherImages {
         id
         image
-        
       }
-      
+    }
+  }
+`;
+
+export const CREATE_USER = gql`
+  mutation createUser($email: String!, $password: String!, $username: String!) {
+    createUser(email: $email, password: $password, username: $username) {
+      user {
+        id
+        email
+        username
+      }
     }
   }
 `;

@@ -37,7 +37,7 @@ const ExploreHeader = (props) => {
 
           labelStyle: {fontSize: 16, fontWeight: 'bold'},
         }}>
-        <Tab.Screen name="ExploreTab" component={ExploreList} />
+        <Tab.Screen name="List" component={ExploreList} />
         <Tab.Screen name="Map" component={ExploreMap} />
       </Tab.Navigator>
     </View>

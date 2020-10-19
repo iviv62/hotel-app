@@ -1,43 +1,36 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useRef } from 'react';
-import { StyleSheet, Text, View, ScrollView, } from 'react-native';
+import React, {useState, useRef} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 
-import { List } from 'react-native-paper';
+import {List} from 'react-native-paper';
 
-const AboutDetails = ({ scrollRef,description }) => {
+const AboutDetails = ({scrollRef, description}) => {
   const [expanded, setExpanded] = useState(false);
 
-  
+  const getItem = (item) => {
+    // Function for click on an item
+    alert('Id : ' + item.id);
+  };
 
   const handlePress = () => {
     setExpanded(!expanded);
+
     setTimeout(() => {
-
       scrollRef.current.scrollToEnd();
-    }, 300)
-
-  }
-
-
+    }, 300);
+  };
 
   return (
     <View>
-
       <List.Accordion
-
         title="About the property"
         titleStyle={styles.title}
         expanded={expanded}
-        onPress={handlePress}>
+        onPress={getItem}>
         <ScrollView>
-          <Text style={styles.text}>
-           {description}
-        </Text>
-
+          <Text style={styles.text}>{description}</Text>
         </ScrollView>
       </List.Accordion>
-
-
     </View>
   );
 };
@@ -49,7 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: -5,
-    color: "black"
+    color: 'black',
   },
   line: {
     borderBottomColor: '#c4c4c4',
@@ -58,7 +51,5 @@ const styles = StyleSheet.create({
   },
   text: {
     paddingHorizontal: 20,
-
-  }
-
+  },
 });

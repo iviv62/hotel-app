@@ -28,7 +28,9 @@ const LoginScreen = () => {
             keyboardType="email-address"
             inputStyle={{color: '#A9A9A9'}}
             returnKeyType="next"
-            
+            onSubmitEditing={() => {
+              this.password.focus();
+            }}
             blurOnSubmit={false}
           />
           <Sae
@@ -44,8 +46,10 @@ const LoginScreen = () => {
             autoCorrect={false}
             keyboardType="default"
             secureTextEntry={true}
+            ref={(password) => {
+              this.password = password;
+            }}
             inputStyle={{color: '#A9A9A9'}}
-           
           />
         </View>
 
@@ -60,7 +64,7 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    flexDirection:"row"
+    flexDirection: 'row',
   },
   textInputsContainer: {
     margin: 10,
