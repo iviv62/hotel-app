@@ -30,6 +30,8 @@ const scrollRef=useRef()
         postedBy={route.params.postedBy}
         scrollRef={scrollRef}
         images={route.params.otherImages}
+        city={route.params.city}
+        address={route.params.address}
         
         />
       </ScrollView>

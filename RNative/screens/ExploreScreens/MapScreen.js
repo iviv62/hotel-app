@@ -47,7 +47,7 @@ const requestLocationPermission = async () => {
 const MapScreen = () => {
 
     useEffect(() => {
-        requestLocationPermission()
+        //requestLocationPermission()
     }, []);
 
 
