@@ -22,23 +22,19 @@ export default function DetailsNav({title}) {
         
       </TouchableHighlight>
       <Text style={styles.title}>{title}</Text>
-      <AnimatedIconButton/>
       <TouchableHighlight
         activeOpacity={0.5}
         underlayColor="#DDDDDD"
         onPress={pr}
         style={styles.rightIconsContainer}>
         <Icon name="share-social" color={'#ffa500'} size={30} />
-        {/* <Image source={share} style={{ width: 20, height: 20, }} /> */}
+        
       </TouchableHighlight>
-      <TouchableHighlight
-        activeOpacity={0.5}
-        underlayColor="#DDDDDD"
-        onPress={pr}
-        style={styles.rightIconsContainer}>
-        <Icon name="heart-outline" color={'#ffa500'} size={30} />
-        {/* <Image source={heart} style={{ width: 20, height: 20, }} /> */}
-      </TouchableHighlight>
+      <AnimatedIconButton namePrimary={"heart-outline"}
+       nameSecondary={"heart"} 
+       colorPrimary={"orange"}
+      colorSecondary={"orange"}
+      size={25}/>
     </View>
   );
 }

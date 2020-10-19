@@ -58,6 +58,14 @@ const DetailsCard = ({
         scrollRef={scrollRef}
         description={description}
         />
+        <AboutDetails
+        scrollRef={scrollRef}
+        description={description}
+        />
+        <AboutDetails
+        scrollRef={scrollRef}
+        description={description}
+        />
       </View>
     </View>
   );

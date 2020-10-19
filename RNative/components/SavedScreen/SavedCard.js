@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AnimatedIconButton from "../AnimatedIconButton"
 
 const SavedCard = () => {
   return (
@@ -22,9 +23,14 @@ const SavedCard = () => {
       />
 
       <View style={styles.top_heart}>
-        <Icon name="trash-outline" color={'#ffa500'} size={20} />
+      <AnimatedIconButton 
+      namePrimary={"trash"} 
+      nameSecondary={"trash"} 
+      colorPrimary={"black"} 
+      colorSecondary={"black"}
+      size={25}/>
       </View>
-      {/* <Image source={heart} style={styles.top_heart}/> */}
+      
       <View style={styles.content}>
         <View>
           <Text style={styles.description}>DETACHED HOUSE ~ 5Y OLD</Text>

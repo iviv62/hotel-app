@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AnimatedIconButton from "../AnimatedIconButton"
 
 const ExploreCard = ({
   title,
@@ -21,7 +22,12 @@ const ExploreCard = ({
       />
 
       <View style={styles.top_heart}>
-        <Icon name="trash-outline" color={'#ffa500'} size={20} solid={true}/>
+      <AnimatedIconButton 
+      namePrimary={"heart-outline"} 
+      nameSecondary={"heart"} 
+      colorPrimary={"orange"} 
+      colorSecondary={"orange"}
+      size={35}/>
       </View>
       <View style={styles.content}>
         <View>
@@ -138,10 +144,9 @@ const styles = StyleSheet.create({
   },
   top_heart: {
     position: 'absolute',
-    width: 30,
-    height: 30,
-    top: 15,
-    right: 15,
+
+    top: 10,
+    right: 10,
   },
   line: {
     borderBottomColor: '#c4c4c4',
