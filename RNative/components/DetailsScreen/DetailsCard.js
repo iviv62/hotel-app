@@ -13,11 +13,12 @@ import OwnerDetails from './OwnerDetails';
 import Swiper from './Swiper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AboutDetails from '../../components/DetailsScreen/AboutDetails';
+import Map from "./Map"
 
 
 const DetailsCard = ({
   price,bedrooms,bathrooms,floors,title,builtOn,area,
-  scrollRef,description,postedBy,images}) => {
+  scrollRef,description,postedBy,images,city,address}) => {
   return (
     <View>
       <Swiper images={images} />
@@ -53,6 +54,7 @@ const DetailsCard = ({
         area={area} 
         floors={floors}
         />
+        <Map city={city} address={address}/>
         <OwnerDetails postedBy={postedBy} />
         <AboutDetails
         scrollRef={scrollRef}

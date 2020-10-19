@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import IconButton from '../IconButton';
 import {Searchbar} from 'react-native-paper';
 import ExploreList from './ExploreList';
-import ExploreMap from './ExploreMap';
+import MapScreen from '../../screens/ExploreScreens/MapScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -37,8 +37,13 @@ const ExploreHeader = (props) => {
 
           labelStyle: {fontSize: 16, fontWeight: 'bold'},
         }}>
+<<<<<<< HEAD
         <Tab.Screen name="List" component={ExploreList} />
         <Tab.Screen name="Map" component={ExploreMap} />
+=======
+        <Tab.Screen name="ExploreTab" component={ExploreList} />
+        <Tab.Screen name="Map" component={MapScreen} />
+>>>>>>> 02d0456fa0d4b952bbe676e10cd9217f788ed1e7
       </Tab.Navigator>
     </View>
   );

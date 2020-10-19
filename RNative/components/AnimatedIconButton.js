@@ -1,46 +1,50 @@
 import React,{useState, useRef} from 'react'
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import * as Animatable from 'react-native-animatable'
-import Icon from 'react-native-vector-icons/AntDesign'
+import Icon from 'react-native-vector-icons/Ionicons'
+
 
 const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
 
-const colors = {
-    heartColor: '#e92f3c',
-    textPrimary: '#515151',
-    
-  }
 
-const AnimatedIconButton = () => {
+const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecondary,size}) => {
 
     const [active,setActive]= useState(false);
-    const handleSmallAnimatedIconRef = useRef();
 
     const handleOnPress = () => {
-        handleSmallAnimatedIconRef.bounceIn()
-        setActive(!active)
+      
+      this.iconRef.bounceIn()
+      setActive(!active)
 
     }
 
     return (
         <TouchableOpacity
+            style = {styles.container}
             activeOpacity={1}
-            onPress={handleOnPress}
+            onPress={()=>handleOnPress()}
           >
-            <AnimatedIcon
-              ref={handleSmallAnimatedIconRef}
-              name={active ? 'heart' : 'hearto'}
-              color={active ? colors.heartColor : colors.textPrimary}
-              size={25}
+          <AnimatedIcon
+              ref={handleSmallAnimatedIconRef => this.iconRef=handleSmallAnimatedIconRef}
+              name={active ? nameSecondary : namePrimary}
+              color={active ? colorSecondary : colorPrimary}
+              size={size}
               style={styles.icon}
             />
+          
           </TouchableOpacity>
-    )
+    );
+
+
+    
 }
 
 export default AnimatedIconButton
 
 const styles = StyleSheet.create({
-
+  container:{
+    alignItems:"center",
+    justifyContent:"center",
+  },
 
 })
