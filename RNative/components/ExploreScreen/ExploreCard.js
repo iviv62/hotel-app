@@ -6,7 +6,9 @@ const ExploreCard = ({
   title,
   price,
   address,
+  image,
   bedrooms,
+  city,
   bathrooms,
   onSelect,
 }) => {
@@ -14,14 +16,12 @@ const ExploreCard = ({
     <TouchableOpacity style={styles.container} onPress={onSelect}>
       <Image
         source={{
-          uri:
-            'https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
-        }}
+          uri:image}}
         style={styles.image}
       />
 
       <View style={styles.top_heart}>
-        <Icon name="trash-outline" color={'#ffa500'} size={20} />
+        <Icon name="trash-outline" color={'#ffa500'} size={20} solid={true}/>
       </View>
       <View style={styles.content}>
         <View>
@@ -32,7 +32,7 @@ const ExploreCard = ({
               <Icon name="location" color={'#ffa500'} size={20} />
             </View>
 
-            <Text style={styles.street}>{address}</Text>
+            <Text style={styles.street}>{city}, {address}</Text>
           </View>
 
           <View style={styles.line} />
@@ -43,7 +43,7 @@ const ExploreCard = ({
                 <Icon name="bed" color={'#ffa500'} size={20} />
               </View>
 
-              {/* <Image source={bed} style={styles.roomIcon} /> */}
+            
               <Text style={styles.num}>{bedrooms}</Text>
               <Text style={styles.room}>Bedrooms</Text>
             </View>
@@ -52,7 +52,7 @@ const ExploreCard = ({
               <View style={styles.roomIcon}>
                 <Icon name="bed" color={'#ffa500'} size={20} />
               </View>
-              {/* <Image source={bath} style={styles.roomIcon} /> */}
+              
               <Text style={styles.num}>{bathrooms}</Text>
               <Text style={styles.room}>Bathrooms</Text>
             </View>

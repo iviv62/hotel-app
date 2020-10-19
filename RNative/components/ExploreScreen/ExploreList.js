@@ -23,6 +23,8 @@ const ExploreList = (props) => {
           address={item.address}
           bedrooms={item.bedrooms}
           bathrooms={item.bathrooms}
+          image={item.otherImages[0].image}
+          city={item.city}
           onSelect={() => props.navigation.navigate('ExploreDetail',item)}
         />
       )}

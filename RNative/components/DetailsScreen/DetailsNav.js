@@ -3,6 +3,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import AnimatedIconButton from "../AnimatedIconButton"
 
 export default function DetailsNav({title}) {
   const navigation = useNavigation();
@@ -18,11 +19,10 @@ export default function DetailsNav({title}) {
         }}
         style={styles.arrowLeftContainer}>
         <Icon name="arrow-back" color={'#ffa500'} size={30} />
-        {/* <Image source={ArrowLeft} style={{ width: 30, height: 30, }} 
-                
-                /> */}
+        
       </TouchableHighlight>
       <Text style={styles.title}>{title}</Text>
+      <AnimatedIconButton/>
       <TouchableHighlight
         activeOpacity={0.5}
         underlayColor="#DDDDDD"
