@@ -12,14 +12,17 @@ import {Sae} from 'react-native-textinput-effects';
 import {CREATE_USER} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
 
+
 const RegistrationScreen = () => {
   let [errortext, setErrortext] = useState('');
   let [userName, setUserName] = useState('');
   let [userEmail, setUserEmail] = useState('');
   let [userPassword, setUserPassword] = useState('');
   let [userConfirmPassword, setUserConfirmPassword] = useState('');
+  //use loading from mutation instead
   let [loadingIndictor, setLoadingIndictor] = useState(false);
   const [createUser, {loading, error}] = useMutation(CREATE_USER, {
+  //                  -------
     onCompleted({email, username}) {
       console.log(email + ' hi ' + username);
     },
@@ -66,6 +69,7 @@ const RegistrationScreen = () => {
 
   return (
     <View style={styles.screen}>
+    {/*use loadingIndicator &&  (......)*/}
       {loadingIndictor ? (
         <ActivityIndicator
           size="large"
