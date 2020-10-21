@@ -31,6 +31,7 @@ const scrollRef=useRef()
         scrollRef={scrollRef}
         images={route.params.otherImages}
         city={route.params.city}
+        location={route.params.location}
         address={route.params.address}
         
         />

@@ -4,9 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  ScrollView,
-  SafeAreaView,
 } from 'react-native';
 import DetailsAdditionalInfo from './DetailsAdditionalInfo';
 import OwnerDetails from './OwnerDetails';
@@ -18,7 +15,7 @@ import Map from "./Map"
 
 const DetailsCard = ({
   price,bedrooms,bathrooms,floors,title,builtOn,area,
-  scrollRef,description,postedBy,images,city,address}) => {
+  scrollRef,description,postedBy,images,city,address, location}) => {
   return (
     <View>
       <Swiper images={images} />
@@ -54,7 +51,7 @@ const DetailsCard = ({
         area={area} 
         floors={floors}
         />
-        <Map city={city} address={address}/>
+        <Map city={city} address={address} location={location}/>
         <OwnerDetails postedBy={postedBy} />
         <AboutDetails
         scrollRef={scrollRef}

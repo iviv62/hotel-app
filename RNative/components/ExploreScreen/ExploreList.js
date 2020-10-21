@@ -3,13 +3,14 @@ import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import ExploreCard from './ExploreCard';
 import { useQuery, gql } from '@apollo/client';
 import {ALL_HOUSES} from '../../constants/query'
+import LoadingComponent from "../../components/LoadingComponent"
 
 
 const ExploreList = (props) => {
   
 
   const { loading, error, data } = useQuery(ALL_HOUSES);
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <LoadingComponent/>;
   if (error) return <Text>Error :(</Text>;
   
   return (
@@ -26,6 +27,7 @@ const ExploreList = (props) => {
           address={item.address}
           image={item.otherImages[0].image}
           city={item.city}
+          location={item.location}
           onSelect={() => props.navigation.navigate('ExploreDetail',item)}
         />
       )}

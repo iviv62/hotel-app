@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
 
 
-const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecondary,size}) => {
+const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecondary,size,func}) => {
 
     const [active,setActive]= useState(false);
 
@@ -15,6 +15,7 @@ const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecond
       
       this.iconRef.bounceIn()
       setActive(!active)
+      func()
 
     }
 
