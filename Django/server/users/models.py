@@ -8,6 +8,8 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     phone = models.CharField(max_length=20,null=True)
     
+    class Meta(object):
+        unique_together = ('email',)
 
     def __str__(self):
         return self.username
