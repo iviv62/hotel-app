@@ -4,6 +4,9 @@ from api.houses.schema import HouseType,House
 import graphene
 from graphene_django import DjangoObjectType
 from graphql import GraphQLError
+import graphene
+import graphql_jwt
+
 
 class UserType(DjangoObjectType):
 
@@ -137,7 +140,15 @@ class DeleteUser(graphene.Mutation):
         user.delete()
         return DeleteUser(user_id=idUser)
 
+class ObtainJSONWebToken(graphql_jwt.relay.JSONWebTokenMutation):
+    user = graphene.Field(UserType)
+
+    @classmethod
+    def resolve(cls, root, info, **kwargs):
+        return cls(user=info.context.user)
+
 class Mutation(graphene.ObjectType):
+    token_auth =ObtainJSONWebToken.Field()
     create_user=CreateUser.Field()
     update_user=UpdateUser.Field()
     delete_user=DeleteUser.Field()
