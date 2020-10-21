@@ -19,7 +19,13 @@ const coordinates = [
 ]
 
 
-const Map = ({city,address}) => {
+const Map = ({city,address,location}) => {
+    const converLocation = (location) =>{
+        let loc=location.replace("(","").replace(")","").split(",")
+        let result= loc.map(cord=>parseFloat(cord))
+        return result
+    }
+
     return (
         <View>
         <View style={{flexDirection: 'row', marginTop:20}}>
@@ -39,7 +45,7 @@ const Map = ({city,address}) => {
             >
                 <MapboxGL.Camera
                     zoomLevel={15}
-                    centerCoordinate={coordinates[0]}
+                    centerCoordinate={converLocation(location)}
                 />
                 <MapboxGL.PointAnnotation
                 selected={true}
@@ -47,8 +53,8 @@ const Map = ({city,address}) => {
                 key="key"
                 id="id"
                 title="End Location"
-                coordinate={coordinates[0]}>
-                <Icon name="home-sharp" color={'black'} size={30} />
+                coordinate={converLocation(location)}>
+                <Icon name="location" color={'orange'} size={30} />
                 
               </MapboxGL.PointAnnotation>
             </MapboxGL.MapView>
