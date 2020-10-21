@@ -117,6 +117,8 @@ const RegistrationScreen = () => {
             ref={(registerEmail) => {
               this.registerEmail = registerEmail;
             }}
+            //use useRef Hookk and then call the function like this
+            //ref.current.focus()
             onSubmitEditing={() => {
               this.registerPassword.focus();
             }}
