@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,37 @@ import {
   ScrollView,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Sae} from 'react-native-textinput-effects';
+import {TOKEN_AUTHENTICATION} from '../../../constants/query';
+import {useMutation} from '@apollo/client';
+import LoadingComponent from '../../../components/LoadingComponent'
 
 const LoginScreen = () => {
+
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const passwordInput = useRef(null);
+  const usernameInput = useRef(null);
+
+  const [Login, {loading, error}] = useMutation(TOKEN_AUTHENTICATION);
+  
+
+ const Submit= async () =>{
+   const response= await Login({variables:{username:username,password:password}})
+  console.log(response.data.tokenAuth.user.username)
+ }
+
+
+
   return (
     <View style={styles.screen}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.textInputsContainer}>
           <Sae
-            label={'Email Address'}
-            iconClass={MaterialIcons}
-            iconName={'email'}
+            label={'Username'}
+            iconClass={FontAwesome5}
+            iconName={'user'}
             iconColor={'orange'}
             inputPadding={16}
             labelHeight={24}
@@ -28,9 +48,9 @@ const LoginScreen = () => {
             keyboardType="email-address"
             inputStyle={{color: '#A9A9A9'}}
             returnKeyType="next"
-            onSubmitEditing={() => {
-              this.password.focus();
-            }}
+            ref={usernameInput}
+            onChangeText={(username) => setUsername(username)}
+            onSubmitEditing = {()=>passwordInput.current.focus()}
             blurOnSubmit={false}
           />
           <Sae
@@ -46,16 +66,20 @@ const LoginScreen = () => {
             autoCorrect={false}
             keyboardType="default"
             secureTextEntry={true}
-            ref={(password) => {
-              this.password = password;
-            }}
+            onChangeText={(password) => setPassword(password)}
+            ref={passwordInput}
             inputStyle={{color: '#A9A9A9'}}
           />
+          {error &&(<Text>Please enter valid credentials</Text>)}
         </View>
 
-        <TouchableOpacity style={styles.buttonStyle} activeOpacity={0.5}>
+        <TouchableOpacity 
+        onPress={()=>Submit()}
+        style={styles.buttonStyle} 
+        activeOpacity={0.5}>
           <Text style={styles.buttonTextStyle}>Login</Text>
         </TouchableOpacity>
+        
       </ScrollView>
     </View>
   );

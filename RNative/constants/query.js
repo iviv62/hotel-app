@@ -42,3 +42,17 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const TOKEN_AUTHENTICATION = gql`
+mutation TokenAuth($username: String!, $password: String!) {
+  tokenAuth(input:{username: $username, password: $password}) {
+    token
+    payload
+    refreshExpiresIn
+    user{
+      id
+      username
+    }
+  }
+}
+`
