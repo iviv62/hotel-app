@@ -3,10 +3,20 @@ import React from 'react'
 import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as myConstClass from "../../constants/constants"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const profile = myConstClass.profilePicture
 
 const Profile = () => {
+    const clearAll = async () => {
+        try {
+          await AsyncStorage.clear()
+        } catch(e) {
+          // clear error
+        }
+      
+        console.log('Done.')
+      }
     return (
         <View style={styles.container}>
 
@@ -54,7 +64,7 @@ const Profile = () => {
                 <TouchableHighlight
                     activeOpacity={0.6}
                     underlayColor="#DDDDDD"
-                    onPress={() => alert('Pressed!')}>
+                    onPress={() => clearAll()}>
                     <View style={styles.option}>
                         <Icon name="log-out-outline" color={'#ffa500'} size={26} />
                         <Text style={styles.optionText}>Log out</Text>

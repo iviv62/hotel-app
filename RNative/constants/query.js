@@ -56,3 +56,10 @@ mutation TokenAuth($username: String!, $password: String!) {
   }
 }
 `
+
+
+export const GET_LOGGED_USER= gql`
+{
+  user @client
+}
+`

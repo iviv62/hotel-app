@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 //import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -14,9 +14,14 @@ import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
 import Profile from '../screens/ProfileScreens/Profile';
 import {userName} from '../constants/storage';
 import {useReactiveVar} from '@apollo/client';
+import {activeUser} from "../constants/hooks";
+
+
 
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
+
+
 
 const ProfileStackScreen = () => (
   <ProfileStack.Navigator
@@ -30,16 +35,25 @@ const ProfileStackScreen = () => (
 
 const HomeNavigation = () => {
   const loggedIn = useReactiveVar(userName);
+  
 
-  useEffect(async () => {
+  const  checkUserData= async () =>{
     try {
       const value = await AsyncStorage.getItem('userName');
       if (value !== null) {
         userName(value);
+        console.log(value)
+        
       }
     } catch (error) {
       // Error retrieving data
     }
+  }
+
+
+  useEffect( () => {
+    checkUserData()
+    
   }, []);
 
   return (

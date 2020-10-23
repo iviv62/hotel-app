@@ -5,12 +5,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  AsyncStorage,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Sae} from 'react-native-textinput-effects';
-import {TOKEN_AUTHENTICATION} from '../../../constants/query';
+import {TOKEN_AUTHENTICATION,GET_LOGGED_USER} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
 import LoadingComponent from '../../../components/LoadingComponent';
 
@@ -22,7 +22,15 @@ const LoginScreen = () => {
   const passwordInput = useRef(null);
   const usernameInput = useRef(null);
 
-  const [Login, {loading, error}] = useMutation(TOKEN_AUTHENTICATION);
+  const [Login, {loading, error},client] = useMutation(TOKEN_AUTHENTICATION);
+
+  const saveUserState = (user)=>{
+    client.writeQuery({
+    query:GET_LOGGED_USER,
+    data:{user:user}
+    
+    })
+  }
 
   const Submit = async () => {
     const response = await Login({
@@ -33,6 +41,7 @@ const LoginScreen = () => {
       'userName',
       response.data.tokenAuth.user.username,
     );
+    saveUserState(response.data.tokenAuth.user)
     userName(response.data.tokenAuth.user.username);
   };
 
