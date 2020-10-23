@@ -1,34 +1,40 @@
-import React,{useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  AsyncStorage,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Sae} from 'react-native-textinput-effects';
 import {TOKEN_AUTHENTICATION} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
-import LoadingComponent from '../../../components/LoadingComponent'
+import LoadingComponent from '../../../components/LoadingComponent';
+
+import {userName} from '../../../constants/storage';
 
 const LoginScreen = () => {
-
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const passwordInput = useRef(null);
   const usernameInput = useRef(null);
 
   const [Login, {loading, error}] = useMutation(TOKEN_AUTHENTICATION);
-  
 
- const Submit= async () =>{
-   const response= await Login({variables:{username:username,password:password}})
-  console.log(response.data.tokenAuth.user.username)
- }
+  const Submit = async () => {
+    const response = await Login({
+      variables: {username: username, password: password},
+    });
 
-
+    await AsyncStorage.setItem(
+      'userName',
+      response.data.tokenAuth.user.username,
+    );
+    userName(response.data.tokenAuth.user.username);
+  };
 
   return (
     <View style={styles.screen}>
@@ -50,7 +56,7 @@ const LoginScreen = () => {
             returnKeyType="next"
             ref={usernameInput}
             onChangeText={(username) => setUsername(username)}
-            onSubmitEditing = {()=>passwordInput.current.focus()}
+            onSubmitEditing={() => passwordInput.current.focus()}
             blurOnSubmit={false}
           />
           <Sae
@@ -70,16 +76,15 @@ const LoginScreen = () => {
             ref={passwordInput}
             inputStyle={{color: '#A9A9A9'}}
           />
-          {error &&(<Text>Please enter valid credentials</Text>)}
+          {error && <Text>Please enter valid credentials</Text>}
         </View>
 
-        <TouchableOpacity 
-        onPress={()=>Submit()}
-        style={styles.buttonStyle} 
-        activeOpacity={0.5}>
+        <TouchableOpacity
+          onPress={() => Submit()}
+          style={styles.buttonStyle}
+          activeOpacity={0.5}>
           <Text style={styles.buttonTextStyle}>Login</Text>
         </TouchableOpacity>
-        
       </ScrollView>
     </View>
   );

@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 //import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -11,6 +12,8 @@ import AuthHome from '../screens/ProfileScreens/AuthHome';
 import Saved from '../screens/SavedScreens/Saved';
 import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
 import Profile from '../screens/ProfileScreens/Profile';
+import {userName} from '../constants/storage';
+import {useReactiveVar} from '@apollo/client';
 
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
@@ -26,6 +29,19 @@ const ProfileStackScreen = () => (
 );
 
 const HomeNavigation = () => {
+  const loggedIn = useReactiveVar(userName);
+
+  useEffect(async () => {
+    try {
+      const value = await AsyncStorage.getItem('userName');
+      if (value !== null) {
+        userName(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }, []);
+
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -51,7 +67,7 @@ const HomeNavigation = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileStackScreen}
+        component={loggedIn == '' ? ProfileStackScreen : Profile}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="ios-person" color={color} size={26} />
