@@ -1,15 +1,15 @@
 import React from 'react';
 import MainNavigation from './navigation/MainNavigation';
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
-import {userName} from './constants/storage';
+import {user} from './constants/storage';
 
 export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        userName: {
+        user: {
           read() {
-            return userName();
+            return user();
           },
         },
       },

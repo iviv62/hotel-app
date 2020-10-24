@@ -4,13 +4,19 @@ import { StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as myConstClass from "../../constants/constants"
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {user} from '../../constants/storage';
+import {useReactiveVar} from '@apollo/client';
 const profile = myConstClass.profilePicture
 
+
+
 const Profile = () => {
+    let userInfo= useReactiveVar(user);
+    userInfo=JSON.parse(userInfo)
     const clearAll = async () => {
         try {
           await AsyncStorage.clear()
+          user([])
         } catch(e) {
           // clear error
         }
@@ -70,6 +76,7 @@ const Profile = () => {
                         <Text style={styles.optionText}>Log out</Text>
                     </View>
                 </TouchableHighlight>
+                <Text>{userInfo.id}</Text>
             </View>
         </View>
     )

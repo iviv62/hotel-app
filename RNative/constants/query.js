@@ -51,6 +51,9 @@ mutation TokenAuth($username: String!, $password: String!) {
     refreshExpiresIn
     user{
       id
+      email
+      firstName
+      lastName
       username
     }
   }

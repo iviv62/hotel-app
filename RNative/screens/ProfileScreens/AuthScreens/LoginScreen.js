@@ -14,7 +14,7 @@ import {TOKEN_AUTHENTICATION,GET_LOGGED_USER} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
 import LoadingComponent from '../../../components/LoadingComponent';
 
-import {userName} from '../../../constants/storage';
+import {user} from '../../../constants/storage';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
@@ -24,25 +24,28 @@ const LoginScreen = () => {
 
   const [Login, {loading, error},client] = useMutation(TOKEN_AUTHENTICATION);
 
-  const saveUserState = (user)=>{
+  {/*const saveUserState = (user)=>{
     client.writeQuery({
     query:GET_LOGGED_USER,
     data:{user:user}
     
     })
-  }
+  }*/}
 
   const Submit = async () => {
-    const response = await Login({
+    let response = await Login({
       variables: {username: username, password: password},
     });
 
+      response.data.tokenAuth.user.token=response.data.tokenAuth.token
+    
+
     await AsyncStorage.setItem(
-      'userName',
-      response.data.tokenAuth.user.username,
-    );
-    saveUserState(response.data.tokenAuth.user)
-    userName(response.data.tokenAuth.user.username);
+      'user',
+      JSON.stringify(response.data.tokenAuth.user)
+    )
+    
+    user([response.data.tokenAuth.user]);
   };
 
   return (

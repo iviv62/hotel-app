@@ -12,7 +12,7 @@ import AuthHome from '../screens/ProfileScreens/AuthHome';
 import Saved from '../screens/SavedScreens/Saved';
 import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
 import Profile from '../screens/ProfileScreens/Profile';
-import {userName} from '../constants/storage';
+import {user} from '../constants/storage';
 import {useReactiveVar} from '@apollo/client';
 import {activeUser} from "../constants/hooks";
 
@@ -34,15 +34,18 @@ const ProfileStackScreen = () => (
 );
 
 const HomeNavigation = () => {
-  const loggedIn = useReactiveVar(userName);
+  const loggedIn = useReactiveVar(user);
+  console.log(loggedIn);
   
 
   const  checkUserData= async () =>{
     try {
-      const value = await AsyncStorage.getItem('userName');
+
+      const value = await AsyncStorage.getItem('user');
       if (value !== null) {
-        userName(value);
-        console.log(value)
+        user(value);
+       
+        
         
       }
     } catch (error) {
@@ -54,6 +57,7 @@ const HomeNavigation = () => {
   useEffect( () => {
     checkUserData()
     
+   
   }, []);
 
   return (
@@ -81,7 +85,7 @@ const HomeNavigation = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={loggedIn == '' ? ProfileStackScreen : Profile}
+        component={loggedIn.length===0 ? ProfileStackScreen : Profile}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="ios-person" color={color} size={26} />
