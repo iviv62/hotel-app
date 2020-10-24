@@ -16,8 +16,7 @@ const scrollRef=useRef()
       <ScrollView
       ref={scrollRef}
       >
-     
-      
+    
         <DetailsCard 
         price={route.params.price} 
         bathrooms={route.params.bathrooms}

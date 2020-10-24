@@ -28,7 +28,7 @@ const ExploreList = (props) => {
           image={item.otherImages[0].image}
           city={item.city}
           location={item.location}
-          onSelect={() => props.navigation.navigate('ExploreDetail',item)}
+          onPress={() => props.navigation.navigate('ExploreDetail',item)}
         />
       )}
     />

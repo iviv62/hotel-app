@@ -44,7 +44,7 @@ const MapScreen = (props) => {
   const [overlayItem, setOverlayItem] = useState(cardData);
 
   useEffect(() => {
-    //requestLocationPermission()
+    requestLocationPermission()
   }, []);
 
   const { loading, error, data } = useQuery(ALL_HOUSES);
@@ -131,6 +131,7 @@ const MapScreen = (props) => {
         {data.allHouses.map(item =>
           <MapboxGL.PointAnnotation
             key={item.id.toString()}
+            id={item.id.toString()}
             coordinate={convertLocation(item.location)}
             onSelected={() => handleSelect(item)}
             onDeselected={() => handleSelect(item)}  

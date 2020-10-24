@@ -11,10 +11,10 @@ const ExploreCard = ({
   bedrooms,
   city,
   bathrooms,
-  onSelect,
+  onPress,
 }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onSelect}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image
         source={{
           uri:image}}
