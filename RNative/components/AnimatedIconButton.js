@@ -10,10 +10,11 @@ const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
 const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecondary,size,func}) => {
 
     const [active,setActive]= useState(false);
+    const iconRef = useRef(null);
 
     const handleOnPress = () => {
       
-      this.iconRef.bounceIn()
+      iconRef.current.bounceIn()
       setActive(!active)
       func()
 
@@ -26,7 +27,7 @@ const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecond
             onPress={()=>handleOnPress()}
           >
           <AnimatedIcon
-              ref={handleSmallAnimatedIconRef => this.iconRef=handleSmallAnimatedIconRef}
+              ref={iconRef}
               name={active ? nameSecondary : namePrimary}
               color={active ? colorSecondary : colorPrimary}
               size={size}

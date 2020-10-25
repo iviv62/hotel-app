@@ -12,6 +12,7 @@ const profile = myConstClass.profilePicture
 
 const Profile = () => {
     let userInfo= useReactiveVar(user);
+    
     userInfo=JSON.parse(userInfo)
     const clearAll = async () => {
         try {
