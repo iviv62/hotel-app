@@ -5,12 +5,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Sae} from 'react-native-textinput-effects';
-import {TOKEN_AUTHENTICATION,GET_LOGGED_USER} from '../../../constants/query';
+import {TOKEN_AUTHENTICATION, GET_LOGGED_USER} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
 import LoadingComponent from '../../../components/LoadingComponent';
 
@@ -22,30 +23,34 @@ const LoginScreen = () => {
   const passwordInput = useRef(null);
   const usernameInput = useRef(null);
 
-  const [Login, {loading, error},client] = useMutation(TOKEN_AUTHENTICATION);
+  const [Login, {loading, error}, client] = useMutation(TOKEN_AUTHENTICATION);
 
-  {/*const saveUserState = (user)=>{
+  {
+    /*const saveUserState = (user)=>{
     client.writeQuery({
     query:GET_LOGGED_USER,
     data:{user:user}
     
     })
-  }*/}
+  }*/
+  }
 
   const Submit = async () => {
     let response = await Login({
       variables: {username: username, password: password},
     });
 
-      response.data.tokenAuth.user.token=response.data.tokenAuth.token
-    
+    response.data.tokenAuth.user.token = response.data.tokenAuth.token;
+
+    console.log(response.data.tokenAuth.user);
 
     await AsyncStorage.setItem(
       'user',
-      JSON.stringify(response.data.tokenAuth.user)
-    )
-    
-    user([response.data.tokenAuth.user]);
+      JSON.stringify(response.data.tokenAuth.user),
+    );
+
+    let userDate = response.data.tokenAuth.user;
+    user(userDate);
   };
 
   return (
@@ -95,7 +100,15 @@ const LoginScreen = () => {
           onPress={() => Submit()}
           style={styles.buttonStyle}
           activeOpacity={0.5}>
-          <Text style={styles.buttonTextStyle}>Login</Text>
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color="#ffffff"
+              style={styles.loader}
+            />
+          ) : (
+            <Text style={styles.buttonTextStyle}>Login</Text>
+          )}
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -127,6 +140,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     paddingVertical: 10,
     fontSize: 16,
+  },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

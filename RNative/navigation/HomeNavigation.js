@@ -14,14 +14,10 @@ import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
 import Profile from '../screens/ProfileScreens/Profile';
 import {user} from '../constants/storage';
 import {useReactiveVar} from '@apollo/client';
-import {activeUser} from "../constants/hooks";
-
-
+import {activeUser} from '../constants/hooks';
 
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
-
-
 
 const ProfileStackScreen = () => (
   <ProfileStack.Navigator
@@ -35,29 +31,23 @@ const ProfileStackScreen = () => (
 
 const HomeNavigation = () => {
   const loggedIn = useReactiveVar(user);
-  console.log(loggedIn);
-  
 
-  const  checkUserData= async () =>{
+  const checkUserData = async () => {
     try {
+      let value = await AsyncStorage.getItem('user');
 
-      const value = await AsyncStorage.getItem('user');
+      value = JSON.parse(value);
+
       if (value !== null) {
         user(value);
-       
-        
-        
       }
     } catch (error) {
       // Error retrieving data
     }
-  }
+  };
 
-
-  useEffect( () => {
-    checkUserData()
-    
-   
+  useEffect(() => {
+    checkUserData();
   }, []);
 
   return (
@@ -85,7 +75,7 @@ const HomeNavigation = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={loggedIn.length===0 ? ProfileStackScreen : Profile}
+        component={loggedIn.length === 0 ? ProfileStackScreen : Profile}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="ios-person" color={color} size={26} />

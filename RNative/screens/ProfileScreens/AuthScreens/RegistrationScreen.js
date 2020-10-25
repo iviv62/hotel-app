@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -7,76 +7,70 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Sae} from 'react-native-textinput-effects';
 import {CREATE_USER} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
-
+import {user} from '../../../constants/storage';
 
 const RegistrationScreen = () => {
-  let [errortext, setErrortext] = useState('');
-  let [userName, setUserName] = useState('');
-  let [userEmail, setUserEmail] = useState('');
-  let [userPassword, setUserPassword] = useState('');
-  let [userConfirmPassword, setUserConfirmPassword] = useState('');
-  //use loading from mutation instead
-  let [loadingIndictor, setLoadingIndictor] = useState(false);
-  const [createUser, {loading, error}] = useMutation(CREATE_USER, {
-  //                  -------
-    onCompleted({email, username}) {
-      console.log(email + ' hi ' + username);
-    },
-  });
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userConfirmPassword, setUserConfirmPassword] = useState('');
 
-  if (error) {
-    console.log('error');
-  }
+  const usernameInput = useRef(null);
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
+  const confirmPasswordInput = useRef(null);
 
-  const handleRegistrationPress = () => {
-    setErrortext('');
+  const [Registration, {loading, error}, client] = useMutation(CREATE_USER);
 
-    if (!userName) {
-      alert('Please fill Username');
-      return;
-    }
-
-    if (!userEmail) {
-      alert('Please fill Email');
-      return;
-    }
-
-    if (!userPassword) {
-      alert('Please fill Pasword');
-      return;
-    }
-
-    if (!userConfirmPassword) {
-      alert('Please fill Confirm Pasword');
-      return;
-    }
-
-    if (userPassword != userConfirmPassword) {
-      alert('Password and confirm password is not same!');
-      return;
-    }
-
-    createUser({
+  const Submit = async () => {
+    let response = await Registration({
       variables: {email: userEmail, password: userPassword, username: userName},
     });
 
-    //setLoading(true);
+    await AsyncStorage.setItem(
+      'user',
+      JSON.stringify(response.data.createUser.user),
+    );
+
+    user(response.data.createUser.user);
+  };
+
+  const handleRegistrationPress = () => {
+    if (!userName) {
+      alert('Please fill Username');
+      return;
+    } else if (!userEmail) {
+      alert('Please fill Email');
+      return;
+    } else if (!userPassword) {
+      alert('Please fill Pasword');
+      return;
+    } else if (!userConfirmPassword) {
+      alert('Please fill Confirm Pasword');
+      return;
+    } else if (userPassword != userConfirmPassword) {
+      alert('Password and confirm password is not same!');
+      return;
+    } else {
+      Submit();
+    }
   };
 
   return (
     <View style={styles.screen}>
-    {/*use loadingIndicator &&  (......)*/}
-      {loadingIndictor ? (
+      {/*use loadingIndicator &&  (......)*/}
+      {/* {loadingIndictor ? (
         <ActivityIndicator
           size="large"
           color="#ffa500"
           style={styles.loading}
         />
-      ) : null}
+      ) : null} */}
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.textInputsContainer}>
           <Sae
@@ -93,8 +87,9 @@ const RegistrationScreen = () => {
             inputStyle={{color: '#A9A9A9'}}
             returnKeyType="next"
             blurOnSubmit={false}
+            ref={usernameInput}
             onSubmitEditing={() => {
-              this.registerEmail.focus();
+              emailInput.current.focus();
             }}
             onChangeText={(UserName) => setUserName(UserName)}
           />
@@ -114,13 +109,9 @@ const RegistrationScreen = () => {
             inputStyle={{color: '#A9A9A9'}}
             returnKeyType="next"
             blurOnSubmit={false}
-            ref={(registerEmail) => {
-              this.registerEmail = registerEmail;
-            }}
-            //use useRef Hookk and then call the function like this
-            //ref.current.focus()
+            ref={emailInput}
             onSubmitEditing={() => {
-              this.registerPassword.focus();
+              passwordInput.current.focus();
             }}
             onChangeText={(UserEmail) => setUserEmail(UserEmail)}
           />
@@ -139,12 +130,10 @@ const RegistrationScreen = () => {
             secureTextEntry={true}
             inputStyle={{color: '#A9A9A9'}}
             returnKeyType="next"
-            ref={(registerPassword) => {
-              this.registerPassword = registerPassword;
-            }}
             blurOnSubmit={false}
+            ref={passwordInput}
             onSubmitEditing={() => {
-              this.confirmPassword.focus();
+              confirmPasswordInput.current.focus();
             }}
             onChangeText={(UserPassword) => setUserPassword(UserPassword)}
           />
@@ -163,25 +152,28 @@ const RegistrationScreen = () => {
             keyboardType="default"
             secureTextEntry={true}
             inputStyle={{color: '#A9A9A9'}}
-            ref={(confirmPassword) => {
-              this.confirmPassword = confirmPassword;
-            }}
+            ref={confirmPasswordInput}
             onChangeText={(UserConfirmPassword) =>
               setUserConfirmPassword(UserConfirmPassword)
             }
           />
         </View>
 
-        {errortext != '' ? (
-          <Text style={styles.errorTextStyle}> {errortext} </Text>
-        ) : null}
-
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
           onPress={handleRegistrationPress}>
-          <Text style={styles.buttonTextStyle}>Sign-Up</Text>
+          {loading ? (
+            <ActivityIndicator
+              size="small"
+              color="#ffffff"
+              style={styles.loader}
+            />
+          ) : (
+            <Text style={styles.buttonTextStyle}>Sign-Up</Text>
+          )}
         </TouchableOpacity>
+        {error && <Text>User with same email or username already exists</Text>}
       </ScrollView>
     </View>
   );
@@ -211,11 +203,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     paddingVertical: 10,
     fontSize: 16,
-  },
-  errorTextStyle: {
-    color: 'red',
-    textAlign: 'center',
-    fontSize: 14,
   },
   loader: {
     flex: 1,
