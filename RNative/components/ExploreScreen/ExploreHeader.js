@@ -30,8 +30,9 @@ const ExploreHeader = (props) => {
           onSelect={() => props.navigation.navigate('Filter')}
         />
       </View>
+      <ExploreList     onSelect={(item) => {props.navigation.navigate('ExploreDetail',item)}} />
 
-      <Tab.Navigator
+      {/* <Tab.Navigator
         tabBarOptions={{
           indicatorStyle: {backgroundColor: '#ffa500'},
 
@@ -39,7 +40,7 @@ const ExploreHeader = (props) => {
         }}>
         <Tab.Screen name="List" component={ExploreList} />
         <Tab.Screen name="Map" component={MapScreen} />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
     </View>
   );
 };

@@ -15,6 +15,7 @@ import Profile from '../screens/ProfileScreens/Profile';
 import {user} from '../constants/storage';
 import {useReactiveVar} from '@apollo/client';
 import {activeUser} from '../constants/hooks';
+import MapScreen from '../screens/ExploreScreens/MapScreen'
 
 const Tab = createBottomTabNavigator();
 const ProfileStack = createStackNavigator();
@@ -74,6 +75,15 @@ const HomeNavigation = () => {
         }}
       />
       <Tab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Icon name="ios-map-outline" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Profile"
         component={loggedIn.length === 0 ? ProfileStackScreen : Profile}
         options={{
@@ -82,6 +92,7 @@ const HomeNavigation = () => {
           ),
         }}
       />
+ 
     </Tab.Navigator>
   );
 };
