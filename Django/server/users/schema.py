@@ -92,9 +92,9 @@ class AddHouseToSaved(graphene.Mutation):
             raise GraphQLError("House id is not valid")
 
 
-        SavedHouses.objects.create(
+        SavedHouses.objects.get_or_create(
                 user=user,
-                favourites=house
+                house=house
             )
         return AddHouseToSaved(user=user,house=house)
 
