@@ -147,7 +147,7 @@ const MapScreen = (props) => {
             onPress={() => requestLocationPermission()}
           >
 
-            <Text style={styles.permissionTextStyle}> Click to give location permission </Text>
+            <Text style={styles.permissionTextStyle}> allow location </Text>
 
           </TouchableOpacity>
 

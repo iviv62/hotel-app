@@ -42,7 +42,7 @@ const LoginScreen = () => {
 
     response.data.tokenAuth.user.token = response.data.tokenAuth.token;
 
-    console.log(response.data.tokenAuth.user);
+    
 
     await AsyncStorage.setItem(
       'user',

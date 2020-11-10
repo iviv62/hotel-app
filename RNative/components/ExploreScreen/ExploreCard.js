@@ -1,9 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AnimatedIconButton from "../AnimatedIconButton"
+import AnimatedIconButton from "../AnimatedIconButton";
+import {SAVE_HOUSE} from '../../constants/query';
+import {useMutation} from '@apollo/client';
 
 const ExploreCard = ({
+  id,
   title,
   price,
   address,
@@ -13,6 +16,20 @@ const ExploreCard = ({
   bathrooms,
   onPress,
 }) => {
+  const [updateSavedHouse, {loading, error}] = useMutation(SAVE_HOUSE);
+
+
+  const updateSaved = async(id) =>{
+    let response = await updateSavedHouse({
+      variables: {houseId: id},
+    }) .then((data) => {
+      console.log(data);
+    }).catch((error)=>{
+       console.log(error);
+    });
+
+  }
+
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image
@@ -23,10 +40,12 @@ const ExploreCard = ({
 
       <View style={styles.top_heart}>
       <AnimatedIconButton 
+      data={id}
       namePrimary={"heart-outline"} 
       nameSecondary={"heart"} 
       colorPrimary={"orange"} 
       colorSecondary={"orange"}
+      func={()=>updateSaved(id)}
       size={35}/>
       </View>
       <View style={styles.content}>

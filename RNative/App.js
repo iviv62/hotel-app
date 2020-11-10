@@ -9,20 +9,25 @@ const httpLink = createHttpLink({
   uri: 'http://api.ivelin.info/graphql/',
 });
 
-const authLink =setContext((_, { headers }) => async()=>{
+const authLink =setContext(async(_, { headers }) =>{
   
   let user =  await AsyncStorage.getItem('user');
-  user = JSON.parse(user);
-  const token = user.token;
-
-  // return the headers to the context so httpLink can read them
+  if(user){
+    user = JSON.parse(user);
+    const token = user.token;
+    console.log(token)
+     // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `JWT ${token}` : "",
+      Authorization: token ? `JWT ${token}` : "",
     }
   }
+  }
+ 
 });
+
+ 
 
 export const cache = new InMemoryCache({
   typePolicies: {

@@ -43,6 +43,27 @@ export const CREATE_USER = gql`
   }
 `;
 
+export const SAVE_HOUSE = gql`
+mutation saveHouse($houseId:Int!){
+	saveHouse(houseId:$houseId){
+    user{
+      id
+      username
+      email
+    }
+    house{
+      id
+      title
+      price
+      address
+      bathrooms
+      bedrooms
+    }
+  }
+}
+
+`;
+
 export const TOKEN_AUTHENTICATION = gql`
   mutation TokenAuth($username: String!, $password: String!) {
     tokenAuth(input: {username: $username, password: $password}) {
