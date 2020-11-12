@@ -24,6 +24,7 @@ class Query(graphene.ObjectType):
 
     all_users=graphene.List(UserType)
     user=graphene.Field(UserType, id=graphene.Int())
+    saved_houses_of_user = graphene.List(SavedHouseType)
 
     def resolve_all_users(self,info,**kwargs):
         return CustomUser.objects.all()
@@ -32,6 +33,12 @@ class Query(graphene.ObjectType):
         id=kwargs.get("id")
         if id is not None:
             return CustomUser.objects.get(id=id)
+
+    def resolve_saved_houses_of_user(self,info,**kwargs):
+        user = info.context.user
+        if user.is_anonymous:
+            return 
+        return SavedHouses.objects.filter(user=user)
 
 class CreateUser(graphene.Mutation):
     user = graphene.Field(UserType)
@@ -92,10 +99,17 @@ class AddHouseToSaved(graphene.Mutation):
             raise GraphQLError("House id is not valid")
 
 
-        SavedHouses.objects.get_or_create(
+        try:
+            SavedHouses.objects.get(
+                    user=user,
+                    house=house
+                ).delete()
+        except SavedHouses.DoesNotExist:
+            SavedHouses.objects.create(
                 user=user,
                 house=house
-            )
+                )
+                
         return AddHouseToSaved(user=user,house=house)
 
 class DeleteHouseFromSaved(graphene.Mutation):

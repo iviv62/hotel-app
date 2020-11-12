@@ -3,6 +3,7 @@ from graphene_django import DjangoObjectType
 from api.models import House,Image
 from graphql import GraphQLError
 from server.settings import MEDIA_URL
+from users.models import CustomUser,SavedHouses
 
 
 
@@ -10,9 +11,8 @@ class HouseType(DjangoObjectType):
 
     class Meta:
         model=House
-
     
-
+    
 class ImageType(DjangoObjectType):
 
     class Meta:
@@ -26,6 +26,7 @@ class ImageType(DjangoObjectType):
 class Query(graphene.ObjectType):
     all_houses=graphene.List(HouseType)
     house=graphene.Field(HouseType, id=graphene.Int())
+    
 
     def resolve_all_houses(self,info,**kwargs):
         return House.objects.all()
@@ -38,6 +39,7 @@ class Query(graphene.ObjectType):
         if id is not None:
             return House.objects.get(id=id)
 
+    
 
 
 class CreateHouse(graphene.Mutation):
@@ -77,6 +79,9 @@ class CreateHouse(graphene.Mutation):
 
         house.save()
         return CreateHouse(house=house)
+
+
+
 
 class Mutation(graphene.ObjectType):
     create_House=CreateHouse.Field()
