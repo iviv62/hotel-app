@@ -82,8 +82,7 @@ class UpdateUser(graphene.Mutation):
         return UpdateUser(user=user)
 
 class AddHouseToSaved(graphene.Mutation):
-    user = graphene.Field(UserType)
-    house = graphene.Field(HouseType)
+    savedHouse=graphene.Field(SavedHouseType)
 
     class Arguments:
         house_id = graphene.Int(required=True)
@@ -97,40 +96,34 @@ class AddHouseToSaved(graphene.Mutation):
         house=House.objects.get(id=house_id)
         if not house:
             raise GraphQLError("House id is not valid")
-
-
-        try:
-            SavedHouses.objects.get(
-                    user=user,
-                    house=house
-                ).delete()
-        except SavedHouses.DoesNotExist:
-            SavedHouses.objects.create(
+    
+        house1= SavedHouses.objects.get_or_create(
                 user=user,
                 house=house
                 )
-                
-        return AddHouseToSaved(user=user,house=house)
+        return AddHouseToSaved(savedHouse=house1[0])
 
 class DeleteHouseFromSaved(graphene.Mutation):
     saved_id = graphene.Int()
 
     class Arguments:
-        saved_id = graphene.Int(required = True)
+        house_id = graphene.Int(required = True)
     
-    def mutate(self, info ,saved_id):
+    def mutate(self, info ,house_id):
         user=info.context.user
 
         if user.is_anonymous:
             raise GraphQLError("Log in to remove a house from saved")
-
-        savedHouse=SavedHouses.objects.get(id=saved_id)
-
+        house= House.objects.get(id=house_id)
+        
+        savedHouse=SavedHouses.objects.get(user=user,house=house)
+        
         if savedHouse.user!=user:
             raise GraphQLError("You are not allowed to delete another users saved data")
-
+            
+        ID=savedHouse.id
         savedHouse.delete()
-        return DeleteHouseFromSaved(saved_id=saved_id)
+        return DeleteHouseFromSaved(saved_id=ID)
 
 
 
