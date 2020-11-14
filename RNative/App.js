@@ -1,9 +1,10 @@
 import React from 'react';
 import MainNavigation from './navigation/MainNavigation';
 import {ApolloClient, InMemoryCache, ApolloProvider,createHttpLink} from '@apollo/client';
-import {user} from './constants/storage';
+import {user,favouriteHouses, allHouses} from './constants/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setContext } from '@apollo/client/link/context';
+import {ALL_HOUSES,SAVED_HOUSES_OF_USER} from './constants/query'
 
 const httpLink = createHttpLink({
   uri: 'http://api.ivelin.info/graphql/',
@@ -11,11 +12,12 @@ const httpLink = createHttpLink({
 
 const authLink =setContext(async(_, { headers }) =>{
   
-  let user =  await AsyncStorage.getItem('user');
-  if(user){
-    user = JSON.parse(user);
-    const token = user.token;
-    console.log(token)
+  let userInfo =  await AsyncStorage.getItem('user');
+  if(userInfo){
+
+    userInfo = JSON.parse(userInfo);
+    user(userInfo)
+    const token = userInfo.token;
      // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -33,20 +35,57 @@ export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
+
         user: {
           read() {
             return user();
           },
         },
+
+        favouriteHouses:{
+          read() {
+            return favouriteHouses();
+          },
+
+        allHouses:{
+          read() {
+            return allHouses();
+          },
+
+        }
+
+        }
       },
     },
   },
 });
 
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: cache,
 });
+
+const getDataOnLoadingScreen= async()=>{
+let responseSaved = await client.query({query:SAVED_HOUSES_OF_USER}) 
+  .then((data) => {
+  //save in reactive variable
+  favouriteHouses(data.data)
+
+}).catch((error)=>{
+   console.log(error);
+});
+
+let responseAll =await allHouses(client.query({query:ALL_HOUSES})).then((data) => {
+  //save in reactive variable
+  allHouses(data.data)
+
+}).catch((error)=>{
+ console.log(error);
+});
+}
+getDataOnLoadingScreen()
+
 
 const App = (props) => {
   return (

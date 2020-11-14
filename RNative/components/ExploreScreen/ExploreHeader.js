@@ -6,13 +6,38 @@ import IconButton from '../IconButton';
 import {Searchbar} from 'react-native-paper';
 import ExploreList from './ExploreList';
 import MapScreen from '../../screens/ExploreScreens/MapScreen';
+import {user,favouriteHouses,allHouses,searchedData} from '../../constants/storage';
+import {useReactiveVar} from '@apollo/client';
 
 const Tab = createMaterialTopTabNavigator();
 
 const ExploreHeader = (props) => {
+
+
   const [searchQuery, setSearchQuery] = React.useState('');
 
-  const onChangeSearch = (query) => setSearchQuery(query);
+  const onChangeSearch = (query) =>{ 
+    setSearchQuery(query)
+
+    if (query===""){
+      searchedData("empty")
+    }else{
+      let data = allHouses().allHouses
+
+      data=data.filter((item)=>{
+       return item.address.toLowerCase().includes(query.toLowerCase())||
+        item.city.toLowerCase().includes(query.toLowerCase())||
+        item.title.toLowerCase().includes(query.toLowerCase())
+      })
+      searchedData(data)
+      
+
+    }
+
+  }
+
+
+
 
   return (
     <View style={styles.header}>

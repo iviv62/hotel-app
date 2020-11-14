@@ -1,9 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AnimatedIconButton from "../AnimatedIconButton";
-import {SAVE_HOUSE} from '../../constants/query';
+import {SAVE_HOUSE,SAVED_HOUSES_OF_USER,DELETE_SAVED_HOUSE} from '../../constants/query';
 import {useMutation} from '@apollo/client';
+import {user,favouriteHouses,allHouses} from '../../constants/storage';
+import {useReactiveVar} from '@apollo/client';
 
 const ExploreCard = ({
   id,
@@ -15,20 +17,74 @@ const ExploreCard = ({
   city,
   bathrooms,
   onPress,
+  savedStatus,
 }) => {
-  const [updateSavedHouse, {loading, error}] = useMutation(SAVE_HOUSE);
+  const [updateSavedHouse, {loading, error,client}] = useMutation(SAVE_HOUSE);
+  const [deleteSavedHouse, ] = useMutation(DELETE_SAVED_HOUSE);
+  let savedHouses = useReactiveVar(favouriteHouses)
+  const [savedState, setSavedState] = useState(savedStatus)
+  
+
+  const deleteFromCache = (item) =>{
+    let newData =[...savedHouses.savedHousesOfUser]
+    newData=newData.filter((i)=>{
+       if(i.id!=item.data.deleteSavedHouse.savedId)return i
+     
+     })
+   
+
+    let obj = {
+      savedHousesOfUser:newData
+    }
+
+    favouriteHouses(obj)
+      
+  }
+  
+  const addToCache = (item) => {
+ 
+ 
+    let newData = [...savedHouses.savedHousesOfUser, item.savedHouse]
+    let obj = {
+      savedHousesOfUser:newData
+    }
+
+    favouriteHouses(obj)
+  
+  }
 
 
   const updateSaved = async(id) =>{
-    let response = await updateSavedHouse({
-      variables: {houseId: id},
-    }) .then((data) => {
-      console.log(data);
-    }).catch((error)=>{
-       console.log(error);
-    });
+    if(savedState===true){
+      
+      setSavedState(!savedState)
+      let response = await deleteSavedHouse({
+        variables: {houseId: id},
+      }) .then((data) => {
+        
+        deleteFromCache(data)
+  
+      }).catch((error)=>{
+         console.log(error);
+      });
+
+    }else{
+      
+      setSavedState(!savedState)
+      let response = await updateSavedHouse({
+        variables: {houseId: id},
+      }) .then((data) => {
+        addToCache(data.data.saveHouse)
+  
+      }).catch((error)=>{
+         console.log(error);
+      });
+
+    }
+   
 
   }
+  
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -44,6 +100,7 @@ const ExploreCard = ({
       namePrimary={"heart-outline"} 
       nameSecondary={"heart"} 
       colorPrimary={"orange"} 
+      Active={savedStatus}
       colorSecondary={"orange"}
       func={()=>updateSaved(id)}
       size={35}/>

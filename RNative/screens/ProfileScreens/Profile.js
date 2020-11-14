@@ -18,9 +18,9 @@ const Profile = () => {
     } catch (e) {
       // clear error
     }
-
-    console.log('Done.');
   };
+
+ 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>

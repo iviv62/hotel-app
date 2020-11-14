@@ -11,7 +11,15 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import AnimatedIconButton from "../AnimatedIconButton"
 
-const SavedCard = () => {
+const SavedCard = (data) => {
+  console.log(data.data)
+
+  const dateFormat = (date) =>{
+    let d = new Date(date);
+    let datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear();
+    return datestring
+  }
+
   return (
     <TouchableOpacity style={styles.container}>
       <Image
@@ -33,16 +41,14 @@ const SavedCard = () => {
       
       <View style={styles.content}>
         <View>
-          <Text style={styles.description}>DETACHED HOUSE ~ 5Y OLD</Text>
-          <Text style={styles.price}>$750,000</Text>
+          <Text style={styles.description}>{data.data.house.title}</Text>
+          <Text style={styles.price}>{data.data.house.price}</Text>
           <View style={{flexDirection: 'row', marginTop: 10}}>
             <View style={styles.icon_location}>
               <Icon name="location" color={'#ffa500'} size={20} />
             </View>
-            {/* <Image source={location} style={styles.icon_location} /> */}
-            <Text style={styles.street}>Richmond Pines Avenue</Text>
+            <Text style={styles.street}>{data.data.house.city} , {data.data.house.address}</Text>
           </View>
-
           <View style={styles.line} />
 
           <View style={styles.roomContainer}>
@@ -50,9 +56,7 @@ const SavedCard = () => {
               <View style={styles.roomIcon}>
                 <Icon name="bed" color={'#ffa500'} size={20} />
               </View>
-
-              {/* <Image source={bed} style={styles.roomIcon} /> */}
-              <Text style={styles.num}>3</Text>
+              <Text style={styles.num}>{data.data.house.bedrooms}</Text>
               <Text style={styles.room}>Bedrooms</Text>
             </View>
 
@@ -60,8 +64,8 @@ const SavedCard = () => {
               <View style={styles.roomIcon}>
                 <Icon name="bed" color={'#ffa500'} size={20} />
               </View>
-              {/* <Image source={bath} style={styles.roomIcon} /> */}
-              <Text style={styles.num}>2</Text>
+
+              <Text style={styles.num}>{data.data.house.bathrooms}</Text>
               <Text style={styles.room}>Bathrooms</Text>
             </View>
           </View>
@@ -70,8 +74,7 @@ const SavedCard = () => {
             <View style={styles.icon_heart}>
               <Icon name="heart" color={'#ffa500'} size={20} />
             </View>
-            {/* <Image source={heart} style={styles.icon_heart} /> */}
-            <Text style={styles.savedText}>Saved on 18.05.2020</Text>
+            <Text style={styles.savedText}>Saved on {dateFormat(data.data.house.createdOn)}</Text>
           </View>
         </View>
       </View>

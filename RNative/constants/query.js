@@ -27,6 +27,11 @@ export const ALL_HOUSES = gql`
         id
         image
       }
+      savedhousesSet{
+        user{
+          id
+        }
+      }
     }
   }
 `;
@@ -43,25 +48,84 @@ export const CREATE_USER = gql`
   }
 `;
 
-export const SAVE_HOUSE = gql`
-mutation saveHouse($houseId:Int!){
-	saveHouse(houseId:$houseId){
-    user{
-      id
-      username
-      email
-    }
+export const SAVED_HOUSES_OF_USER = gql`
+{
+  savedHousesOfUser{
+    id
     house{
       id
       title
+      description
+      floors
+      builtOn
+      area
+      bedrooms
+      bathrooms
       price
       address
-      bathrooms
-      bedrooms
+      location
+      city
+      createdOn
+      postedBy{
+        firstName
+        lastName
+        email
+        phone
+      }
+      otherImages{
+        id
+        image
+      }
+      
     }
   }
 }
+`;
 
+export const SAVE_HOUSE = gql`
+mutation saveHouse($houseId: Int!) {
+  saveHouse(houseId: $houseId) {
+    savedHouse {
+      id
+      user {
+        id
+      }
+      house {
+        id
+        title
+        description
+        floors
+        builtOn
+        area
+        bedrooms
+        bathrooms
+        price
+        address
+        location
+        city
+        createdOn
+        postedBy {
+          firstName
+          lastName
+          email
+          phone
+        }
+        otherImages {
+          id
+          image
+        }
+      }
+    }
+  }
+}
+`;
+
+export const DELETE_SAVED_HOUSE = gql`
+mutation deleteSavedHouse($houseId: Int!) {
+  deleteSavedHouse(houseId: $houseId) {
+   savedId
+  }
+}
 `;
 
 export const TOKEN_AUTHENTICATION = gql`
