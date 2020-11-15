@@ -3,19 +3,70 @@ import {View, Text, StyleSheet} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
 import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import {user,favouriteHouses,allHouses,searchedData,filteredData} from './../constants/storage';
 
 const FilterScreen = () => {
 
 
   const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
+  const [title, setTitle] = useState('');
   const [ownerName, setOwnerName] = useState('');
   const [ownerPhone, setOwnerPhone] = useState('');
+
+  const navigation = useNavigation();
 
 
   const [multiSliderValue, setMultiSliderValue] = useState([1, 500000])
 
   const multiSliderValuesChange = (values) => setMultiSliderValue(values)
+
+  const resetFilter = () =>{
+    setCity("")
+    setAddress("")
+    setOwnerName("")
+    setOwnerPhone("")
+    setTitle("")
+    setMultiSliderValue([1,500000])
+
+    filteredData([])
+    let resetData = allHouses().allHouses
+    console.log("reset")
+    searchedData(resetData)
+    navigation.goBack()
+
+  }
+
+  const filterData = () =>{
+    let data = allHouses().allHouses
+    let temp  = data.filter((item)=>{
+     return item.city.toLowerCase().includes(city.toLowerCase())
+    })
+    .filter((item)=>{
+       return item.address.toLowerCase().includes(address.toLowerCase())
+    })
+   .filter((item)=>{
+     return item.postedBy.firstName.toLowerCase().includes(ownerName.toLowerCase())||
+     item.postedBy.lastName.toLowerCase().includes(ownerName.toLowerCase())
+    })
+    .filter((item)=>{
+      return item.title.toLowerCase().includes(title.toLowerCase())
+    })
+    .filter((item)=>{
+      return item.price>=multiSliderValue[0] &&
+             item.price<=multiSliderValue[1]
+   })
+     
+    console.log("filter")
+    searchedData(temp)
+    console.log(searchedData())
+    filteredData(temp)
+    
+    
+    navigation.goBack()
+
+  }
 
 
   return (
@@ -23,10 +74,10 @@ const FilterScreen = () => {
     <View style = {{flexDirection:"row"}}>
       <Text style = {styles.title}>Filter</Text>
       <View style = {{flexDirection:"row", justifyContent:"flex-end",flex:1,marginRight:20}}>
-      <Button style= {styles.btn}  color="black"  onPress={() => console.log('Pressed')}>
+      <Button style= {styles.btn}  color="black"  onPress={() => resetFilter()}>
       Reset
     </Button>
-    <Button style= {styles.btn} icon="filter" mode="contained" color="orange"  onPress={() => console.log('Pressed')}>
+    <Button style= {styles.btn} icon="filter" mode="contained" color="orange"  onPress={() => filterData()}>
       Filter
     </Button>
     </View>
@@ -49,6 +100,15 @@ const FilterScreen = () => {
           theme={{colors: {primary: 'orange'}}}
           underlineColor="orange"
           onChangeText={address => setAddress(address)}
+        />
+        <TextInput
+          label="Title"
+          value={title}
+          style={styles.input}
+          selectionColor="orange"
+          theme={{colors: {primary: 'orange'}}}
+          underlineColor="orange"
+          onChangeText={title => setTitle(title)}
         />
 
         <TextInput

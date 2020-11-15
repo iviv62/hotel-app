@@ -1,7 +1,7 @@
 import React from 'react';
 import MainNavigation from './navigation/MainNavigation';
 import {ApolloClient, InMemoryCache, ApolloProvider,createHttpLink} from '@apollo/client';
-import {user,favouriteHouses, allHouses} from './constants/storage';
+import {user,favouriteHouses, allHouses,searchedData,filteredData} from './constants/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setContext } from '@apollo/client/link/context';
 import {ALL_HOUSES,SAVED_HOUSES_OF_USER} from './constants/query'
@@ -45,19 +45,33 @@ export const cache = new InMemoryCache({
         favouriteHouses:{
           read() {
             return favouriteHouses();
+          }
           },
 
         allHouses:{
           read() {
             return allHouses();
+          }
+        },
+
+        searchedData:{
+          read() {
+            return searchedData();
+          }
           },
 
-        }
+          filteredData:{
+            read() {
+              return filteredData();
+            }
+           },
 
-        }
+        },
+
+        },
       },
-    },
-  },
+    
+  
 });
 
 
@@ -76,9 +90,11 @@ let responseSaved = await client.query({query:SAVED_HOUSES_OF_USER})
    console.log(error);
 });
 
-let responseAll =await allHouses(client.query({query:ALL_HOUSES})).then((data) => {
+let responseAll =await client.query({query:ALL_HOUSES}).then((data) => {
   //save in reactive variable
+  console.log(data.data)
   allHouses(data.data)
+  searchedData(data.data.allHouses);
 
 }).catch((error)=>{
  console.log(error);

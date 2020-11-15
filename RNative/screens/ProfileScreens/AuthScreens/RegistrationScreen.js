@@ -10,7 +10,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Sae} from 'react-native-textinput-effects';
-import {CREATE_USER} from '../../../constants/query';
+import {CREATE_USER,TOKEN_AUTHENTICATION} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
 import {user} from '../../../constants/storage';
 
@@ -26,18 +26,35 @@ const RegistrationScreen = () => {
   const confirmPasswordInput = useRef(null);
 
   const [Registration, {loading, error}, client] = useMutation(CREATE_USER);
+  const [Login] = useMutation(TOKEN_AUTHENTICATION);
 
   const Submit = async () => {
+
     let response = await Registration({
       variables: {email: userEmail, password: userPassword, username: userName},
-    });
+    }).then(async(data)=>{
+      
 
-    await AsyncStorage.setItem(
-      'user',
-      JSON.stringify(response.data.createUser.user),
-    );
+      let userData = await Login({
+        variables: {username: userName, password: userPassword},
+      })
 
-    user(response.data.createUser.user);
+      userData.data.tokenAuth.user.token = userData.data.tokenAuth.token;
+
+      await AsyncStorage.setItem(
+        'user',
+        JSON.stringify(userData.data.tokenAuth.user),
+      );
+  
+       userData = userData.data.tokenAuth.user;
+      user(userDate);
+
+
+    }).catch((error)=>{
+      console.log(error)
+    })
+
+    
   };
 
   const handleRegistrationPress = () => {
@@ -63,14 +80,7 @@ const RegistrationScreen = () => {
 
   return (
     <View style={styles.screen}>
-      {/*use loadingIndicator &&  (......)*/}
-      {/* {loadingIndictor ? (
-        <ActivityIndicator
-          size="large"
-          color="#ffa500"
-          style={styles.loading}
-        />
-      ) : null} */}
+     
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.textInputsContainer}>
           <Sae

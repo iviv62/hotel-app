@@ -4,47 +4,50 @@ import ExploreCard from './ExploreCard';
 import { useQuery, } from '@apollo/client';
 import {ALL_HOUSES,SAVED_HOUSES_OF_USER} from '../../constants/query'
 import LoadingComponent from "../../components/LoadingComponent"
-import {user,favouriteHouses,allHouses,searchedData} from '../../constants/storage';
+import {user,favouriteHouses,allHouses,searchedData,filteredData} from '../../constants/storage';
 import {useReactiveVar} from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
+
+
+
 
 const ExploreList = (props) => {
 
-  
+  const navigation = useNavigation();
   let userInfo =  useReactiveVar(user);
-  let data =  useReactiveVar(allHouses)
+  let filterData = useReactiveVar(filteredData)
 
 
-
-/*
-  const { loading, error, data ,refetch,networkStatus,client} = useQuery(ALL_HOUSES,);  
-  if (loading) return <LoadingComponent/>;
-  if (error) return <Text>Error :(</Text>;*/
+  
+//  const { loading, error, data ,refetch,networkStatus,client} = useQuery(ALL_HOUSES);
  
-
+ // if (loading) return <LoadingComponent/>;
+  //if (error) return <Text>Error :(</Text>;
+  
+  useEffect(() => {
+    console.log("hi")
+  }, [filterData]);
     
+  
+
   
   
   const getSavedStatus = (item) =>{
       //every house has an array with the users that saved it
       //check the array and see if the user id is present
-      
       let output=item.savedhousesSet.some((item) =>{
-        //console.log(item.user.id + "from set")
-        //console.log(userInfo.id + "from app")
-        return item.user.id===userInfo.id
-          
+        return item.user.id===userInfo.id          
       });
-   
-      
       return output
     }
     
     
   return (
-    userInfo.id?(
+    <View style={{backgroundColor:"#f1f1f1",flex:1}}>
+    {filteredData().length>0 && <Text style={styles.result}>result from filter {filteredData().length}</Text>}
     <FlatList
       keyExtractor={(item) => item.id.toString()}
-      data={searchedData()!="empty"? searchedData() : data.allHouses}
+      data={ searchedData()}
       renderItem={({item}) => (
         <ExploreCard
           id = {item.id}
@@ -58,15 +61,26 @@ const ExploreList = (props) => {
           image={item.otherImages[0].image}
           city={item.city}
           location={item.location}
-          onPress={() => props.onSelect(item)}
+          onPress={() => navigation.navigate('ExploreDetail',item)}
+          
         />
       )}
-    />):
-    <View></View>
+    />
+   </View>
+    
   );
   
 };
 
 export default ExploreList;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+
+  result:{
+    marginLeft:20,
+    fontWeight:"bold",
+    fontSize:16,
+    marginTop:10,
+  }
+
+});

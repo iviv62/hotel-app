@@ -6,8 +6,9 @@ import IconButton from '../IconButton';
 import {Searchbar} from 'react-native-paper';
 import ExploreList from './ExploreList';
 import MapScreen from '../../screens/ExploreScreens/MapScreen';
-import {user,favouriteHouses,allHouses,searchedData} from '../../constants/storage';
-import {useReactiveVar} from '@apollo/client';
+import {user,favouriteHouses,allHouses,searchedData,filteredData} from '../../constants/storage';
+
+
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -19,9 +20,23 @@ const ExploreHeader = (props) => {
   const onChangeSearch = (query) =>{ 
     setSearchQuery(query)
 
-    if (query===""){
-      searchedData("empty")
-    }else{
+    if( filteredData().length>0 ){
+      //with filter and search
+      let data = filteredData()
+      
+      data=data.filter((item)=>{
+        return item.address.toLowerCase().includes(query.toLowerCase())||
+         item.city.toLowerCase().includes(query.toLowerCase())||
+         item.title.toLowerCase().includes(query.toLowerCase())
+       })
+      
+       searchedData(data)
+      
+
+    
+    }else if(query!=="" && filteredData().length===0){
+     //without filter
+     console.log("without")
       let data = allHouses().allHouses
 
       data=data.filter((item)=>{
@@ -30,8 +45,8 @@ const ExploreHeader = (props) => {
         item.title.toLowerCase().includes(query.toLowerCase())
       })
       searchedData(data)
-      
-
+    }else{
+      searchedData(allHouses().allHouses)
     }
 
   }
@@ -44,7 +59,7 @@ const ExploreHeader = (props) => {
       <View style={styles.searchContainer}>
         <Searchbar
           placeholder="Search"
-          onChangeText={onChangeSearch}
+          onChangeText={(value)=>onChangeSearch(value)}
           value={searchQuery}
           style={{fontSize: 12, elevation: 0, flex: 1}}
         />
@@ -55,7 +70,7 @@ const ExploreHeader = (props) => {
           onSelect={() => props.navigation.navigate('Filter')}
         />
       </View>
-      <ExploreList     onSelect={(item) => {props.navigation.navigate('ExploreDetail',item)}} />
+      <ExploreList  />
 
       {/* <Tab.Navigator
         tabBarOptions={{
@@ -76,6 +91,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: 'white',
     flex: 1,
+    color:"black"
   },
   searchContainer: {
     flexDirection: 'row',
