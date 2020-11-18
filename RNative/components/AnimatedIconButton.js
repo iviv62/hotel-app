@@ -1,22 +1,44 @@
-import React,{useState, useRef} from 'react'
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import React,{useState, useRef,useEffect} from 'react'
+import { StyleSheet, Text, View,TouchableOpacity,ToastAndroid } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/Ionicons'
+import {user,favouriteHouses,allHouses,searchedData,filteredData} from '../constants/storage';
+import {useReactiveVar} from '@apollo/client';
 
 
 const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
 
 
-const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecondary,size,data,Active,func}) => {
+const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecondary,size,id,Active,func}) => {
 
     const [active,setActive]= useState(Active);
     const iconRef = useRef(null);
+    let userInfo = useReactiveVar(user);
+
+    useEffect(() => {
+      if(typeof userInfo.id==="undefined"){
+        setActive(false)
+      }else{
+        setActive(Active)
+      }
+    }, [userInfo]);
+    
 
     const handleOnPress = () => {
-      
+
+      if(userInfo.id){
       iconRef.current.bounceIn()
       setActive(!active)
       func()
+      }else{
+        ToastAndroid.showWithGravityAndOffset(
+          "Log in to be able to use this option",
+          ToastAndroid.LONG,
+          ToastAndroid.CENTER,
+          25,
+          50
+        );
+      }
 
     }
 

@@ -16,6 +16,8 @@ const ExploreList = (props) => {
   const navigation = useNavigation();
   let userInfo =  useReactiveVar(user);
   let filterData = useReactiveVar(filteredData)
+  let houses = useReactiveVar(allHouses)
+  let search = useReactiveVar(searchedData)
 
 
   
@@ -23,12 +25,24 @@ const ExploreList = (props) => {
  
  // if (loading) return <LoadingComponent/>;
   //if (error) return <Text>Error :(</Text>;
-  
+
+
+
   useEffect(() => {
-    console.log("hi")
+    let mounted = true
+    if(mounted){
+      console.log("hi")
+    }
+    
   }, [filterData]);
     
-  
+  useEffect(() => {
+    let mounted = true
+    if(mounted){
+      console.log("hi")
+    }
+    
+  }, [search]);
 
   
   
@@ -38,7 +52,8 @@ const ExploreList = (props) => {
       let output=item.savedhousesSet.some((item) =>{
         return item.user.id===userInfo.id          
       });
-      return output
+      item.savedStatus=output
+      return item.savedStatus
     }
     
     
@@ -47,8 +62,10 @@ const ExploreList = (props) => {
     {filteredData().length>0 && <Text style={styles.result}>result from filter {filteredData().length}</Text>}
     <FlatList
       keyExtractor={(item) => item.id.toString()}
-      data={ searchedData()}
+      data={ search}
+      extraData={search}
       renderItem={({item}) => (
+        
         <ExploreCard
           id = {item.id}
           title={item.title}

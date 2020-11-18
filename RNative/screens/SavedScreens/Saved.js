@@ -29,7 +29,7 @@ const Saved = () => {
   
     <FlatList
     keyExtractor={(item) => item.house.id.toString()}
-    data={data.savedHousesOfUser}
+    data={favouriteHouses().savedHousesOfUser}
     renderItem={({item}) => (
       <SavedCard
         data={item}

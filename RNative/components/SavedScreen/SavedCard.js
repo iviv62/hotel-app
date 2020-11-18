@@ -6,13 +6,12 @@ import {
   View,
   TouchableOpacity,
   Image,
-  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AnimatedIconButton from "../AnimatedIconButton"
 
 const SavedCard = (data) => {
-  console.log(data.data)
+
 
   const dateFormat = (date) =>{
     let d = new Date(date);
@@ -25,7 +24,7 @@ const SavedCard = (data) => {
       <Image
         source={{
           uri:
-            'https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+            data.data.house.otherImages[0].image,
         }}
         style={styles.image}
       />

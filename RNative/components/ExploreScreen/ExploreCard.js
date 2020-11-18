@@ -96,11 +96,11 @@ const ExploreCard = ({
 
       <View style={styles.top_heart}>
       <AnimatedIconButton 
-      data={id}
+      id={id}
       namePrimary={"heart-outline"} 
       nameSecondary={"heart"} 
       colorPrimary={"orange"} 
-      Active={savedStatus}
+      Active={savedState}
       colorSecondary={"orange"}
       func={()=>updateSaved(id)}
       size={35}/>

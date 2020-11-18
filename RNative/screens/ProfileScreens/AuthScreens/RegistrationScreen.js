@@ -13,6 +13,14 @@ import {Sae} from 'react-native-textinput-effects';
 import {CREATE_USER,TOKEN_AUTHENTICATION} from '../../../constants/query';
 import {useMutation} from '@apollo/client';
 import {user} from '../../../constants/storage';
+import * as utils from  '../../../constants/utils';
+import * as clientClass from '../../../constants/client-cache';
+
+let reloadData = utils.getDataOnLoadingScreen
+let client=clientClass.client
+let authLink=clientClass.authLink
+let httpLink = clientClass.httpLink
+
 
 const RegistrationScreen = () => {
   const [userName, setUserName] = useState('');
@@ -25,7 +33,7 @@ const RegistrationScreen = () => {
   const passwordInput = useRef(null);
   const confirmPasswordInput = useRef(null);
 
-  const [Registration, {loading, error}, client] = useMutation(CREATE_USER);
+  const [Registration, {loading, error}] = useMutation(CREATE_USER);
   const [Login] = useMutation(TOKEN_AUTHENTICATION);
 
   const Submit = async () => {
@@ -46,8 +54,16 @@ const RegistrationScreen = () => {
         JSON.stringify(userData.data.tokenAuth.user),
       );
   
-       userData = userData.data.tokenAuth.user;
+      userData = userData.data.tokenAuth.user;
+      await client.clearStore();
+      await client.cache.gc();
       user(userDate);
+
+
+      client.setLink(
+        authLink.concat(httpLink)
+      )  
+      reloadData()
 
 
     }).catch((error)=>{

@@ -4,8 +4,14 @@ import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as myConstClass from '../../constants/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {user} from '../../constants/storage';
+import {user,favouriteHouses, allHouses,searchedData,filteredData} from '../../constants/storage';
 import {useReactiveVar} from '@apollo/client';
+import * as utils from  '../../constants/utils';
+import * as clientClass from '../../constants/client-cache';
+
+let reloadData = utils.getDataOnLoadingScreen
+
+let client=clientClass.client
 const profile = myConstClass.profilePicture;
 
 const Profile = () => {
@@ -14,7 +20,14 @@ const Profile = () => {
   const clearAll = async () => {
     try {
       await AsyncStorage.clear();
-      user([]);
+      //clear cache
+      user([])
+      
+      await client.clearStore();
+      await client.cache.gc();
+      //and reload data
+      reloadData()
+
     } catch (e) {
       // clear error
     }

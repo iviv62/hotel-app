@@ -15,6 +15,7 @@ import LoadingComponent from '../../components/LoadingComponent';
 import { useQuery, gql } from '@apollo/client';
 import MapCard from '../../components/ExploreScreen/MapCard';
 import AnimatedIconButton from '../../components/AnimatedIconButton';
+import {user,favouriteHouses, allHouses,searchedData,filteredData} from './../../constants/storage';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 
 MapboxGL.setAccessToken(MAPBOX_KEY);
@@ -59,6 +60,8 @@ const MapScreen = (props) => {
   const { loading, error, data } = useQuery(ALL_HOUSES);
   if (loading) return <LoadingComponent />;
   if (error) return <Text>Error :(</Text>;
+  console.log(data)
+  console.log("maps")
 
   const convertLocation = (location) => {
     let loc = location.replace('(', '').replace(')', '').split(',');
@@ -70,12 +73,10 @@ const MapScreen = (props) => {
     let temp = {};
     temp = item;
     await setOverlayItem(temp);
-    console.log('selected');
     await setActive(true);
   };
 
   const handleDeselect = () => {
-    console.log('deselect');
     setActive(false);
   };
 
@@ -128,7 +129,7 @@ const MapScreen = (props) => {
               showsUserHeadingIndicator={true}
             />
             <MapboxGL.Camera zoomLevel={1} followUserLocation={true} />
-            {data.allHouses.map((item) => (
+            { allHouses().allHouses.map((item) => (
               <MapboxGL.PointAnnotation
                 key={item.id.toString()}
                 id={item.id.toString()}

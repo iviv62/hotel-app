@@ -3,10 +3,10 @@ import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-//import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+
 
 import ExploreHomeScreen from '../screens/ExploreScreens/ExploreHomeScreen';
-//import SavedScreen from '../screens/SavedScreens/SavedScreen';
+
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthHome from '../screens/ProfileScreens/AuthHome';
 import Saved from '../screens/SavedScreens/Saved';
@@ -14,7 +14,7 @@ import ProfileNotLogged from '../screens/ProfileScreens/ProfileNotLogged';
 import Profile from '../screens/ProfileScreens/Profile';
 import {user} from '../constants/storage';
 import {useReactiveVar} from '@apollo/client';
-import {activeUser} from '../constants/hooks';
+
 import MapScreen from '../screens/ExploreScreens/MapScreen'
 
 const Tab = createBottomTabNavigator();
