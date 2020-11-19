@@ -7,10 +7,7 @@ import {List} from 'react-native-paper';
 const AboutDetails = ({scrollRef, description}) => {
   const [expanded, setExpanded] = useState(false);
 
-  const getItem = (item) => {
-    // Function for click on an item
-    alert('Id : ' + item.id);
-  };
+ 
 
   const handlePress = () => {
     setExpanded(!expanded);
@@ -26,7 +23,7 @@ const AboutDetails = ({scrollRef, description}) => {
         title="About the property"
         titleStyle={styles.title}
         expanded={expanded}
-        onPress={getItem}>
+        onPress={handlePress}>
         <ScrollView>
           <Text style={styles.text}>{description}</Text>
         </ScrollView>

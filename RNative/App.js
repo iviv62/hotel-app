@@ -7,6 +7,7 @@ import { setContext } from '@apollo/client/link/context';
 import {ALL_HOUSES,SAVED_HOUSES_OF_USER} from './constants/query';
 import * as clientClass from './constants/client-cache';
 import * as utils from  './constants/utils';
+import 'react-native-gesture-handler';
 
 let client=clientClass.client
 let loadData = utils.getDataOnLoadingScreen

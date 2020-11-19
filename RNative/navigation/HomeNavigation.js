@@ -71,7 +71,8 @@ const HomeNavigation = () => {
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="ios-heart" color={color} size={26} />
-          ),
+          )
+          
         }}
       />
       <Tab.Screen
