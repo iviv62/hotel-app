@@ -31,7 +31,8 @@ export default function DetailsNav({title}) {
         
       </TouchableHighlight>
       <AnimatedIconButton namePrimary={"heart-outline"}
-       nameSecondary={"heart"} 
+       nameSecondary={"heart"}
+  
        colorPrimary={"orange"}
       colorSecondary={"orange"}
       size={25}/>

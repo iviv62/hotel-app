@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React,{useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView,FlatList} from 'react-native';
 import SavedCard from '../../components/SavedScreen/SavedCard';
 import CardNotUsed from '../../components/SavedScreen/CardNotUsed'
@@ -21,6 +21,8 @@ const Saved = () => {
   if (error) return <Text>Error :(</Text>;*/
   let data = useReactiveVar(favouriteHouses)
   
+ 
+  
 
 
   return (
@@ -30,6 +32,7 @@ const Saved = () => {
     <FlatList
     keyExtractor={(item) => item.house.id.toString()}
     data={favouriteHouses().savedHousesOfUser}
+    extraData={favouriteHouses()}
     renderItem={({item}) => (
       <SavedCard
         data={item}

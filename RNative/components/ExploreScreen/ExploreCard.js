@@ -24,7 +24,7 @@ const ExploreCard = ({
   let savedHouses = useReactiveVar(favouriteHouses)
   const [savedState, setSavedState] = useState(savedStatus)
   
-
+ 
   const deleteFromCache = (item) =>{
     let newData =[...savedHouses.savedHousesOfUser]
     newData=newData.filter((i)=>{
@@ -38,6 +38,7 @@ const ExploreCard = ({
     }
 
     favouriteHouses(obj)
+   
       
   }
   

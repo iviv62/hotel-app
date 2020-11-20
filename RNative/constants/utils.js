@@ -16,12 +16,29 @@ export const getDataOnLoadingScreen= async()=>{
     
     let responseAll =await client.query({query:ALL_HOUSES}).then((data) => {
       //save in reactive variable
-     
+
+      
+     console.log(data.data)
       allHouses(data.data)
-      console.log(data.data)
       searchedData(data.data.allHouses);
     
     }).catch((error)=>{
      console.log(error);
     });
+
     }
+
+export const reloadExploreScreenData= async()=>{
+  searchedData([])
+  let responseAll =await client.query({query:ALL_HOUSES,fetchPolicy: 'network-only'}).then((data) => {
+    //save in reactive variable
+   
+    allHouses(data.data)
+    console.log(data.data.allHouses)
+    searchedData(data.data.allHouses);
+  
+  }).catch((error)=>{
+   console.log(error);
+  });
+
+}

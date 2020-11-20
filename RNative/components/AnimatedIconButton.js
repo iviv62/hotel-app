@@ -14,6 +14,7 @@ const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecond
     const [active,setActive]= useState(Active);
     const iconRef = useRef(null);
     let userInfo = useReactiveVar(user);
+    let search = useReactiveVar(searchedData)
 
     useEffect(() => {
       if(typeof userInfo.id==="undefined"){
@@ -22,6 +23,11 @@ const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecond
         setActive(Active)
       }
     }, [userInfo]);
+
+    useEffect(() => {
+      setActive(Active)
+      console.log("yup")
+    }, [allHouses()]);
     
 
     const handleOnPress = () => {

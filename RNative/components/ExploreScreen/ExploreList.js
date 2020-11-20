@@ -16,35 +16,27 @@ const ExploreList = (props) => {
   const navigation = useNavigation();
   let userInfo =  useReactiveVar(user);
   let filterData = useReactiveVar(filteredData)
+  let favs = useReactiveVar(favouriteHouses)
   let houses = useReactiveVar(allHouses)
   let search = useReactiveVar(searchedData)
+  let mounted = true
 
 
+
+  useEffect(() => {
+    let mounted = false
+
+    if(mounted){
+      console.log("hi")
+    }
+    
+    
+  }, [search,favs]);
   
-//  const { loading, error, data ,refetch,networkStatus,client} = useQuery(ALL_HOUSES);
+ const { loading, error, data ,refetch,networkStatus,client} = useQuery(ALL_HOUSES);
  
- // if (loading) return <LoadingComponent/>;
-  //if (error) return <Text>Error :(</Text>;
-
-
-
-  useEffect(() => {
-    let mounted = true
-    if(mounted){
-      console.log("hi")
-    }
-    
-  }, [filterData]);
-    
-  useEffect(() => {
-    let mounted = true
-    if(mounted){
-      console.log("hi")
-    }
-    
-  }, [search]);
-
-  
+  if (loading) return <LoadingComponent/>;
+  if (error) return <Text>Error :(</Text>;
   
   const getSavedStatus = (item) =>{
       //every house has an array with the users that saved it
@@ -59,13 +51,15 @@ const ExploreList = (props) => {
     
   return (
     <View style={{backgroundColor:"#f1f1f1",flex:1}}>
-    {filteredData().length>0 && <Text style={styles.result}>result from filter {filteredData().length}</Text>}
+    {
+      filteredData().length>0 && <Text style={styles.result}>result from filter {filteredData().length}</Text>
+    }
+    {mounted &&
     <FlatList
       keyExtractor={(item) => item.id.toString()}
       data={ search}
-      extraData={search}
+      extraData={favouriteHouses()}
       renderItem={({item}) => (
-        
         <ExploreCard
           id = {item.id}
           title={item.title}
@@ -79,10 +73,10 @@ const ExploreList = (props) => {
           city={item.city}
           location={item.location}
           onPress={() => navigation.navigate('ExploreDetail',item)}
-          
         />
       )}
     />
+      }
    </View>
     
   );

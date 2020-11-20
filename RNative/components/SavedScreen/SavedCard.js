@@ -9,15 +9,58 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AnimatedIconButton from "../AnimatedIconButton"
+import {SAVE_HOUSE,SAVED_HOUSES_OF_USER,DELETE_SAVED_HOUSE} from '../../constants/query';
+import {user,favouriteHouses,allHouses,searchedData,filteredData} from '../../constants/storage';
+import {useReactiveVar} from '@apollo/client';
+import {useMutation} from '@apollo/client';
+import * as utils from  '../../constants/utils';
+
+let reloadData = utils.reloadExploreScreenData
+
 
 const SavedCard = (data) => {
+  let savedHouses = useReactiveVar(favouriteHouses)
+  const [deleteSavedHouse, {loading, error,client}] = useMutation(DELETE_SAVED_HOUSE);
 
-
+    if (loading) return<Text>loading</Text>
   const dateFormat = (date) =>{
     let d = new Date(date);
     let datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear();
     return datestring
   }
+  
+
+  const deleteFromCache = (item) =>{
+    let newData =[...savedHouses.savedHousesOfUser]
+    newData=newData.filter((i)=>{
+       if(i.id!=item.data.deleteSavedHouse.savedId)return i
+     
+     })
+   
+   
+    let obj = {
+      savedHousesOfUser:newData
+    }
+
+    favouriteHouses(obj)
+    console.log("sds")
+    console.log(favouriteHouses())
+    
+  }
+
+  const deleteFromDB=async(id)=>{
+    let response = await deleteSavedHouse({
+      variables: {houseId: id},
+    }) .then((data) => {
+      
+      deleteFromCache(data)
+      reloadData()  
+    }).catch((error)=>{
+       console.log(error);
+    });
+  }
+
+
 
   return (
     <TouchableOpacity style={styles.container}>
@@ -33,7 +76,9 @@ const SavedCard = (data) => {
       <AnimatedIconButton 
       namePrimary={"trash"} 
       nameSecondary={"trash"} 
-      colorPrimary={"black"} 
+      colorPrimary={"black"}
+      Active={true} 
+      func={()=>deleteFromDB(data.data.house.id)}
       colorSecondary={"black"}
       size={25}/>
       </View>

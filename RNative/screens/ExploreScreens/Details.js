@@ -12,7 +12,7 @@ const scrollRef=useRef()
   
   return (
     <View style={{flex: 1}}>
-      <DetailsNav title={route.params.title} />
+      <DetailsNav title={route.params.title}  />
       <ScrollView
       ref={scrollRef}
       >
