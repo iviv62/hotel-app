@@ -14,15 +14,17 @@ import {user,favouriteHouses,allHouses,searchedData,filteredData} from '../../co
 import {useReactiveVar} from '@apollo/client';
 import {useMutation} from '@apollo/client';
 import * as utils from  '../../constants/utils';
+import IconMCS from 'react-native-vector-icons/MaterialCommunityIcons';
 
 let reloadData = utils.reloadExploreScreenData
 
 
 const SavedCard = (data) => {
+
   let savedHouses = useReactiveVar(favouriteHouses)
   const [deleteSavedHouse, {loading, error,client}] = useMutation(DELETE_SAVED_HOUSE);
 
-    if (loading) return<Text>loading</Text>
+  if (loading) return<Text>loading</Text>
   const dateFormat = (date) =>{
     let d = new Date(date);
     let datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear();
@@ -106,7 +108,7 @@ const SavedCard = (data) => {
 
             <View style={styles.roomInfo}>
               <View style={styles.roomIcon}>
-                <Icon name="bed" color={'#ffa500'} size={20} />
+              <IconMCS name="shower" color={'#ffa500'} size={20} />
               </View>
 
               <Text style={styles.num}>{data.data.house.bathrooms}</Text>
@@ -164,10 +166,11 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   roomIcon: {
-    width: 25,
-    height: 25,
-
-    marginRight: 15,
+    justifyContent: 'center', //Centered vertically
+    alignItems: 'center', // Centered horizontally
+    display:"flex",
+    marginRight:5
+    
   },
   num: {
     fontWeight: 'bold',

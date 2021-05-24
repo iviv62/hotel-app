@@ -27,6 +27,7 @@ const ProfileStackScreen = () => (
     }}>
     <ProfileStack.Screen name="AuthOption" component={ProfileNotLogged} />
     <ProfileStack.Screen name="AuthHome" component={AuthHome} />
+    
   </ProfileStack.Navigator>
 );
 

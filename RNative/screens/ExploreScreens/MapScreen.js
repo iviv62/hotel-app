@@ -60,8 +60,7 @@ const MapScreen = (props) => {
   const { loading, error, data } = useQuery(ALL_HOUSES);
   if (loading) return <LoadingComponent />;
   if (error) return <Text>Error :(</Text>;
-  console.log(data)
-  console.log("maps")
+  
 
   const convertLocation = (location) => {
     let loc = location.replace('(', '').replace(')', '').split(',');

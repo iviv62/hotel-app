@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import IconMCS from 'react-native-vector-icons/MaterialCommunityIcons';
 import AnimatedIconButton from "../AnimatedIconButton";
 import {SAVE_HOUSE,SAVED_HOUSES_OF_USER,DELETE_SAVED_HOUSE} from '../../constants/query';
 import {useMutation} from '@apollo/client';
@@ -133,7 +134,7 @@ const ExploreCard = ({
 
             <View style={styles.roomInfo}>
               <View style={styles.roomIcon}>
-                <Icon name="bed" color={'#ffa500'} size={20} />
+                <IconMCS name="shower" color={'#ffa500'} size={20} />
               </View>
               
               <Text style={styles.num}>{bathrooms}</Text>
@@ -182,12 +183,13 @@ const styles = StyleSheet.create({
   roomInfo: {
     flexDirection: 'row',
     display: 'flex',
+    
   },
   roomIcon: {
-    width: 25,
-    height: 25,
-
-    marginRight: 15,
+    justifyContent: 'center', //Centered vertically
+    alignItems: 'center', // Centered horizontally
+    display:"flex",
+    marginRight:5
   },
   num: {
     fontWeight: 'bold',

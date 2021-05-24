@@ -57,7 +57,7 @@ const RegistrationScreen = () => {
       userData = userData.data.tokenAuth.user;
       await client.clearStore();
       await client.cache.gc();
-      user(userDate);
+      user(userData);
 
 
       client.setLink(

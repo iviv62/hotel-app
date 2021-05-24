@@ -36,6 +36,42 @@ export const ALL_HOUSES = gql`
   }
 `;
 
+export const GET_HOUSE=gql`
+  query($id:Int!){
+  house(id:$id){
+  		id
+      title
+      description
+      floors
+      builtOn
+      area
+      bedrooms
+      bathrooms
+      price
+      address
+      location
+      city
+      createdOn
+      postedBy {
+        id
+        firstName
+        lastName
+        phone
+        email
+      }
+      otherImages {
+        id
+        image
+      }
+      savedhousesSet{
+        user{
+          id
+      }
+	}
+ }
+}`
+
+
 export const CREATE_USER = gql`
   mutation createUser($email: String!, $password: String!, $username: String!) {
     createUser(email: $email, password: $password, username: $username) {
@@ -145,8 +181,25 @@ export const TOKEN_AUTHENTICATION = gql`
   }
 `;
 
-export const GET_LOGGED_USER = gql`
-  {
-    user @client
+export const DELETE_USER=gql`
+mutation($userId:Int!){
+  deleteUser(userId:$userId){
+    userId
   }
+}
 `;
+
+export const GET_USER=gql`
+  query($id:Int!){
+    user(id:$id){
+      id
+      username
+      email
+      phone
+      firstName
+      lastName
+    }
+  }
+`
+
+

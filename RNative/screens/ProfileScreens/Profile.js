@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
+import { Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as myConstClass from '../../constants/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,14 +9,21 @@ import {user,favouriteHouses, allHouses,searchedData,filteredData} from '../../c
 import {useReactiveVar} from '@apollo/client';
 import * as utils from  '../../constants/utils';
 import * as clientClass from '../../constants/client-cache';
+import {DELETE_USER} from '../../constants/query';
+import {useMutation} from '@apollo/client';
 
 let reloadData = utils.getDataOnLoadingScreen
 
 let client=clientClass.client
 const profile = myConstClass.profilePicture;
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
+  
   let userInfo = useReactiveVar(user);
+  
+  const [visible, setVisible] = React.useState(false);
+  const showDialog = () => setVisible(true);
+  const hideDialog = () => setVisible(false);
 
   const clearAll = async () => {
     try {
@@ -33,6 +41,17 @@ const Profile = () => {
     }
   };
 
+  const [deleteProfile,{data,error} ] = useMutation(DELETE_USER);
+  const deleteUser=()=>{
+    console.log(userInfo);
+    deleteProfile({ variables: {  userId: parseInt(userInfo.id) } });
+    
+    clearAll();
+    hideDialog();
+  }
+
+
+
  
   return (
     <View style={styles.container}>
@@ -44,7 +63,7 @@ const Profile = () => {
         <TouchableHighlight
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
-          onPress={() => alert('Pressed!')}>
+          onPress={() => navigation.navigate("EditProfile")}>
           <View style={styles.option}>
             <Icon name="pencil-sharp" color={'#ffa500'} size={26} />
             <Text style={styles.optionText}>Edit profile</Text>
@@ -53,7 +72,7 @@ const Profile = () => {
         <TouchableHighlight
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
-          onPress={() => alert('Pressed!')}>
+          onPress={() => alert('Under Development!')}>
           <View style={styles.option}>
             <Icon name="add-circle-outline" color={'#ffa500'} size={26} />
             <Text style={styles.optionText}>List property</Text>
@@ -62,7 +81,7 @@ const Profile = () => {
         <TouchableHighlight
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
-          onPress={() => alert('Pressed!')}>
+          onPress={() => alert('Under development!')}>
           <View style={styles.option}>
             <Icon name="star-half-sharp" color={'#ffa500'} size={26} />
             <Text style={styles.optionText}>Rate the app</Text>
@@ -71,7 +90,7 @@ const Profile = () => {
         <TouchableHighlight
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
-          onPress={() => alert('Pressed!')}>
+          onPress={showDialog}>
           <View style={styles.option}>
             <Icon name="trash-outline" color={'#ffa500'} size={26} />
             <Text style={styles.optionText}>Delete Profile</Text>
@@ -88,6 +107,24 @@ const Profile = () => {
         </TouchableHighlight>
         <Text>{userInfo.id}</Text>
       </View>
+
+
+      {/*modal*/}
+      <View>
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title></Dialog.Title>
+          <Dialog.Content>
+            <Paragraph>All of your account data will be deleted! Are you sure? </Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={deleteUser}>Delete</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+    </View>
+
     </View>
   );
 };

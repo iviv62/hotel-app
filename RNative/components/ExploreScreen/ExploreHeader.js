@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TextInput} from 'react-native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
+
 import IconButton from '../IconButton';
 import {Searchbar} from 'react-native-paper';
 import ExploreList from './ExploreList';
@@ -10,7 +9,7 @@ import {user,favouriteHouses,allHouses,searchedData,filteredData} from '../../co
 
 
 
-const Tab = createMaterialTopTabNavigator();
+
 
 const ExploreHeader = (props) => {
 

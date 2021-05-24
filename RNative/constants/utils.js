@@ -31,10 +31,10 @@ export const getDataOnLoadingScreen= async()=>{
 export const reloadExploreScreenData= async()=>{
   searchedData([])
   let responseAll =await client.query({query:ALL_HOUSES,fetchPolicy: 'network-only'}).then((data) => {
+    
     //save in reactive variable
-   
+
     allHouses(data.data)
-    console.log(data.data.allHouses)
     searchedData(data.data.allHouses);
   
   }).catch((error)=>{

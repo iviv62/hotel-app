@@ -34,7 +34,7 @@ class Query(graphene.ObjectType):
     def resolve_all_house_images(self,info,**kwargs):
         return Image.objects.all()
 
-    def resolve_houses(self,info,**kwargs):
+    def resolve_house(self,info,**kwargs):
         id=kwargs.get("id")
         if id is not None:
             return House.objects.get(id=id)

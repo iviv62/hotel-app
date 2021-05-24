@@ -138,12 +138,12 @@ class DeleteUser(graphene.Mutation):
 
     def mutate(self, info, user_id):
         idUser=user_id
-        user=CustomUser.objects.get(id=user_id)
+        user=CustomUser.objects.get(id=idUser)
         user_request=info.context.user
        
 
-        if user != user_request:
-           raise GraphQLError("Cant delete the data of other users")
+        #if user != user_request:
+        #   raise GraphQLError("Cant delete the data of other users")
         user.delete()
         return DeleteUser(user_id=idUser)
 
