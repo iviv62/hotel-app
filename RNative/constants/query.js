@@ -103,6 +103,7 @@ export const SAVED_HOUSES_OF_USER = gql`
       city
       createdOn
       postedBy{
+        id
         firstName
         lastName
         email
@@ -201,5 +202,17 @@ export const GET_USER=gql`
     }
   }
 `
+export const UPDATE_USER_DATA = gql`
+mutation($userId:Int!,$firstName:String,$phone:String,$lastName:String,$email:String){
+  updateUser(userId:$userId,firstName:$firstName,phone:$phone,lastName:$lastName,email:$email){
+    user{
+      id
+      email
+      phone
+      firstName
+      lastName
+    }
+  }
+}`
 
 

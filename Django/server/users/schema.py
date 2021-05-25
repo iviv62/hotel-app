@@ -69,15 +69,20 @@ class UpdateUser(graphene.Mutation):
         first_name =  graphene.String()
         last_name =  graphene.String()
 
-    def mutate(self, info, phone,first_name,last_name,user_id):
+    def mutate(self, info, phone,first_name,last_name,user_id,email):
         user=CustomUser.objects.get(id=user_id)
         user_request=info.context.user
 
         if user != user_request:
            raise GraphQLError("Cant change the data of other users")
-        user.phone=phone
-        user.first_name=first_name
-        user.last_name=last_name
+        if phone !="":
+            user.phone=phone
+        if first_name !="":
+            user.first_name=first_name
+        if last_name!="":
+            user.last_name=last_name
+        if email!="":
+            user.email=email
         user.save()
         return UpdateUser(user=user)
 
