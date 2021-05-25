@@ -11,7 +11,7 @@ import LoadingComponent from "../../components/LoadingComponent"
 import {user,favouriteHouses,allHouses} from '../../constants/storage';
 import {useReactiveVar} from '@apollo/client';
 
-const Saved = () => {
+const Saved = (props) => {
 
   /*const { loading, error, data ,refetch,networkStatus} = useQuery(SAVED_HOUSES_OF_USER,
     {notifyOnNetworkStatusChange: true,});
@@ -19,12 +19,8 @@ const Saved = () => {
    
   if (loading) return <LoadingComponent/>;
   if (error) return <Text>Error :(</Text>;*/
+    //dont delete very importatnt
   let data = useReactiveVar(favouriteHouses)
-  
- 
-  
-
-
   return (
     <View style={styles.container}>
     <Text style={styles.title}>Saved</Text>
@@ -36,7 +32,7 @@ const Saved = () => {
     renderItem={({item}) => (
       <SavedCard
         data={item}
-        onPress={() => props.onSelect(item)}
+        onPress={() => props.navigation.navigate('ExploreDetail',item)}
       />
       )}
       />

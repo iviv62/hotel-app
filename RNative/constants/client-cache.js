@@ -48,6 +48,7 @@ const cache = new InMemoryCache({
 
 export const httpLink = createHttpLink({
     uri: 'http://api.ivelin.info/graphql/',
+    
   });
   
 export const authLink =setContext(async(_, { headers }) =>{
@@ -72,5 +73,9 @@ export const authLink =setContext(async(_, { headers }) =>{
 export const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: cache,
+    onError: ({ networkError, graphQLErrors }) => {
+      console.log('graphQLErrors', graphQLErrors)
+      console.log('networkError', networkError)
+    }
   });
   

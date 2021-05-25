@@ -8,8 +8,12 @@ import {
   ScrollView,
   Dimensions,
   Pressable,
+  TouchableOpacity,
+  
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { TapGestureHandler } from 'react-native-gesture-handler';
+import IconButton from '../IconButton'
 
 const {width} = Dimensions.get('window');
 const height = width * 0.6;
@@ -18,8 +22,10 @@ const height = width * 0.6;
 const Swiper = ({images}) => {
   const navigation = useNavigation();
   const [active, setActive] = useState(0);
+ 
 
   const change = ({nativeEvent}) => {
+    
     const slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width,
     );
@@ -31,11 +37,7 @@ const Swiper = ({images}) => {
   
 
   return (
-    <Pressable onPress={() => {
-      console.log("click")
-      
-      navigation.navigate("Carousel", images)
-    }}>
+    <View>
     <View style={styles.container}>
     <View>
       <ScrollView
@@ -44,10 +46,12 @@ const Swiper = ({images}) => {
         onScroll={change}
         showsHorizontalScrollIndicator={false}
         style={styles.container}>
+        
         {images.map((item,index) => (
-          
+          <View>
           <Image key={index} source={{uri: item.image}} style={styles.image} />
-       
+          
+          </View>
         ))}
       </ScrollView>
       <View style={styles.pagination}>
@@ -62,7 +66,7 @@ const Swiper = ({images}) => {
       </View>
      
     </View>
-    </Pressable>
+    </View>
   
   );
 };
@@ -94,4 +98,5 @@ const styles = StyleSheet.create({
     color: 'orange',
     margin: 3,
   },
+  
 });

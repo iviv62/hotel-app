@@ -65,7 +65,8 @@ const SavedCard = (data) => {
 
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container}
+    onPress={data.onPress}>
       <Image
         source={{
           uri:
@@ -116,12 +117,6 @@ const SavedCard = (data) => {
             </View>
           </View>
           <View style={styles.line} />
-          <View style={styles.saved}>
-            <View style={styles.icon_heart}>
-              <Icon name="heart" color={'#ffa500'} size={20} />
-            </View>
-            <Text style={styles.savedText}>Saved on {dateFormat(data.data.house.createdOn)}</Text>
-          </View>
         </View>
       </View>
     </TouchableOpacity>

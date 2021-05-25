@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react'
-import { Text,StyleSheet,View,Image } from 'react-native'
+import { Text,StyleSheet,View,Image,ActivityIndicator, } from 'react-native'
 import * as myConstClass from '../../constants/constants';
 import { TextInput } from 'react-native-paper';
-import {GET_USER} from '../../constants/query';
+import {GET_USER,UPDATE_USER_DATA} from '../../constants/query';
 import {useMutation,useQuery} from '@apollo/client';
 import {user} from '../../constants/storage';
 import {useReactiveVar} from '@apollo/client';
@@ -15,17 +15,33 @@ const EditProfile = ({navigation}) => {
     const [name, setName] = React.useState('');
     const [phone, setPhone] = React.useState('');
     const [surname, setSurname] = React.useState('');
-   
+    const [visibility, setVisibility] = React.useState(false);
+    //const [activeLoading , setActiveLoading] = React.useState(false);
+
     let userInfo = useReactiveVar(user);
     let id=parseInt(userInfo.id);
 
+    const [updateUser,{data,loading:load}] = useMutation(UPDATE_USER_DATA,{
+        variables:{userId:id,email:email,firstName:name,phone:phone,lastName:surname},
+        fetchPolicy: "no-cache",
+        onCompleted:data=>{if(data){setVisibility(true)}},
+        onerror:err=>console.log(err)
+    });
+
     useEffect(() => {
-        
+    const parent = navigation.dangerouslyGetParent();
+        parent.setOptions({
+        tabBarVisible: false,
+        });
         return () => {
             setEmail("");
             setPhone("");
             setSurname("");
             setName("");
+            setVisibility(false)
+            parent.setOptions({
+                tabBarVisible: true,
+            });
         }
     }, [navigation])
     
@@ -33,10 +49,11 @@ const EditProfile = ({navigation}) => {
         {variables:{id:id},
         fetchPolicy: "network-only",
         onCompleted: data => {
+            
             setEmail(data.user.email);
             setPhone(data.user.phone);
             setSurname(data.user.lastName);
-            setName(data.user.lastName);
+            setName(data.user.firstName);
          },
       });
   if (loading) return  <Text>loading....</Text>;
@@ -78,8 +95,13 @@ const EditProfile = ({navigation}) => {
                 value={surname}
                 onChangeText={surname => setSurname(surname)}
             />
-            <Button style={styles.btn} mode="contained" onPress={() => console.log('Pressed')}>
-            Update
+            {visibility===true && <Text>Personal information is succesfully updated</Text>}
+            <Button style={styles.btn} mode="contained" onPress={() => {
+                setVisibility(false);
+                updateUser()}}>
+                {load ? (
+                    <Text>Updating...</Text>
+                  ):(<Text>Update</Text>)}
           </Button>
             
             
@@ -104,6 +126,11 @@ const styles = StyleSheet.create({
       fontSize: 30,
       fontWeight: "bold"
     },
+    loader: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
     profile_pic: {
         marginTop: 22,
         width: 40,

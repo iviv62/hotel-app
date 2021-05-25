@@ -7,7 +7,13 @@ import {useReactiveVar} from '@apollo/client';
 import {user} from '../../constants/storage';
 
 
-const Details = ({navigation, route,item}) => {
+const Details = ({navigation, route}) => {
+  let item;
+  if(route.params.house){
+    item=route.params.house;
+  }else{
+    item=route.params;
+  }
 
   let userInfo =  useReactiveVar(user);
   const getSavedStatus = (item) =>{
@@ -28,26 +34,26 @@ const scrollRef=useRef()
   
   return (
     <View style={{flex: 1}}>
-      <DetailsNav title={route.params.title} item={route.params} id={route.params.id} status={getSavedStatus(route.params)} />
+      <DetailsNav title={item.title} item={item} id={item.id}  images={item.otherImages} />
       <ScrollView
       ref={scrollRef}
       >
-    
+      
         <DetailsCard 
-        price={route.params.price} 
-        bathrooms={route.params.bathrooms}
-        bedrooms={route.params.bedrooms}
-        floors={route.params.floors}
-        title={route.params.title}
-        builtOn={route.params.builtOn}
-        area={route.params.area}
-        description={route.params.description}
-        postedBy={route.params.postedBy}
+        price={item.price} 
+        bathrooms={item.bathrooms}
+        bedrooms={item.bedrooms}
+        floors={item.floors}
+        title={item.title}
+        builtOn={item.builtOn}
+        area={item.area}
+        description={item.description}
+        postedBy={item.postedBy}
         scrollRef={scrollRef}
-        images={route.params.otherImages}
-        city={route.params.city}
-        location={route.params.location}
-        address={route.params.address}
+        images={item.otherImages}
+        city={item.city}
+        location={item.location}
+        address={item.address}
         
         />
       </ScrollView>

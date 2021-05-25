@@ -45,7 +45,6 @@ const Profile = ({ navigation }) => {
   const deleteUser=()=>{
     console.log(userInfo);
     deleteProfile({ variables: {  userId: parseInt(userInfo.id) } });
-    
     clearAll();
     hideDialog();
   }

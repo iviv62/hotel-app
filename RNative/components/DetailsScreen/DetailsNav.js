@@ -8,11 +8,11 @@ import {user,favouriteHouses,allHouses} from '../../constants/storage';
 import {useReactiveVar} from '@apollo/client';
 import {SAVE_HOUSE,SAVED_HOUSES_OF_USER,DELETE_SAVED_HOUSE,GET_HOUSE} from '../../constants/query';
 import {useMutation,useQuery} from '@apollo/client';
+import IconButton from '../IconButton'
 
 
 
-
-export default function DetailsNav({title,item,id, }) {
+export default function DetailsNav({title,item,id, images }) {
   const navigation = useNavigation();
   let userInfo =  useReactiveVar(user);
   const [savedState, setSavedState] = useState(false)
@@ -122,15 +122,13 @@ export default function DetailsNav({title,item,id, }) {
       </TouchableHighlight>
       <Text style={styles.title}>{title}</Text>
       
-      <AnimatedIconButton 
-      id={id}
-      namePrimary={"heart-outline"} 
-      nameSecondary={"heart"} 
-      colorPrimary={"orange"} 
-      Active={savedState}
-      colorSecondary={"orange"}
-      func={()=>updateSaved(id)}
-      size={25}/>
+      <View style={styles.zoomIcon}>
+        <IconButton
+          name={"zoom-out-map"}
+          size={25}
+          color={"black"}
+          onSelect={()=>{navigation.navigate("Carousel", images)}}/>
+          </View>
     </View>
   );
 }
@@ -148,6 +146,15 @@ const styles = StyleSheet.create({
       height: 2,
       width: 2,
     },
+  },
+  zoomIcon:{
+    height: 40,
+    width: 40,
+    marginHorizontal: 20,
+    marginVertical: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   arrowLeftContainer: {
     height: 40,
