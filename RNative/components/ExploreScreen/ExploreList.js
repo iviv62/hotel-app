@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, FlatList,Image} from 'react-native';
 import ExploreCard from './ExploreCard';
 import { useQuery, } from '@apollo/client';
 import {ALL_HOUSES,SAVED_HOUSES_OF_USER} from '../../constants/query'
@@ -7,11 +7,13 @@ import LoadingComponent from "../../components/LoadingComponent"
 import {user,favouriteHouses,allHouses,searchedData,filteredData} from '../../constants/storage';
 import {useReactiveVar} from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
-
+import defaultIMG from '../../images/default.jpg'
 
 
 
 const ExploreList = (props) => {
+  const img = Image.resolveAssetSource(defaultIMG).uri
+
 
   const navigation = useNavigation();
   let userInfo =  useReactiveVar(user);
@@ -69,7 +71,7 @@ const ExploreList = (props) => {
           bathrooms={item.bathrooms}
           savedStatus={getSavedStatus(item)}
           address={item.address}
-          image={item.otherImages[0].image}
+          image={typeof item.otherImages[0] != "undefined"? item.otherImages[0].image:img}
           city={item.city}
           location={item.location}
           onPress={() => navigation.navigate('ExploreDetail',item)}

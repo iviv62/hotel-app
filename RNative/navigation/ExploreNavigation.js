@@ -6,6 +6,7 @@ import Carousel from '../components/DetailsScreen/FullScreenCarousel';
 import FilterScreen from '../screens/FilterScreen';
 import Details from '../screens/ExploreScreens/Details';
 import EditProfile from '../screens/ProfileScreens/EditProfile'
+import  ListProperty  from '../screens/ProfileScreens/ListProperty';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const ExploreNavigation = () => {
       <Stack.Screen name="Carousel" component={Carousel} />
       <Stack.Screen name="ExploreDetail" component={Details} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="ListProperty" component={ListProperty} />
     </Stack.Navigator>
   );
 };

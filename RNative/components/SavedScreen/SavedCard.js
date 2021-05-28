@@ -15,12 +15,12 @@ import {useReactiveVar} from '@apollo/client';
 import {useMutation} from '@apollo/client';
 import * as utils from  '../../constants/utils';
 import IconMCS from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import defaultIMG from '../../images/default.jpg'
 let reloadData = utils.reloadExploreScreenData
 
 
 const SavedCard = (data) => {
-
+  const img = Image.resolveAssetSource(defaultIMG).uri
   let savedHouses = useReactiveVar(favouriteHouses)
   const [deleteSavedHouse, {loading, error,client}] = useMutation(DELETE_SAVED_HOUSE);
 
@@ -70,7 +70,7 @@ const SavedCard = (data) => {
       <Image
         source={{
           uri:
-            data.data.house.otherImages[0].image,
+          typeof data.data.house.otherImages[0] != "undefined" ?data.data.house.otherImages[0].image:img
         }}
         style={styles.image}
       />

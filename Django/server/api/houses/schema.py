@@ -55,13 +55,15 @@ class CreateHouse(graphene.Mutation):
         bathrooms = graphene.Int(required=True)
         price = graphene.Float(required=True)
         address = graphene.String(required = True)
-        location = graphene.String(required = True)
+        location = graphene.List(graphene.Float,required = True)
+        city = graphene.String(required = True)
     
     
-    def mutate(self, info, title, description, floors,built_on,area,bedrooms,bathrooms,price,address,location):
+    def mutate(self, info, title, description, floors,built_on,area,bedrooms,bathrooms,price,address,location,city):
         user = info.context.user
         if user.is_anonymous:
             raise GraphQLError("Log in to add a house")
+        
 
         house=House(
             title=title,
@@ -73,10 +75,11 @@ class CreateHouse(graphene.Mutation):
             bathrooms=bathrooms,
             price=price,
             address=address,
-            location=eval(location),
+            city = city,
+            location=tuple(location),
             posted_by=user,
             )
-
+        
         house.save()
         return CreateHouse(house=house)
 

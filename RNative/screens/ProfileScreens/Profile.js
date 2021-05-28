@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
-import { Button, Paragraph, Dialog, Portal } from 'react-native-paper';
+import { Button, Paragraph, Dialog, Portal,Badge } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as myConstClass from '../../constants/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -71,10 +71,11 @@ const Profile = ({ navigation }) => {
         <TouchableHighlight
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
-          onPress={() => alert('Under Development!')}>
+          onPress={() => navigation.navigate("ListProperty")}>
           <View style={styles.option}>
             <Icon name="add-circle-outline" color={'#ffa500'} size={26} />
             <Text style={styles.optionText}>List property</Text>
+            <Badge style={styles.badge}>Beta</Badge>
           </View>
         </TouchableHighlight>
         <TouchableHighlight
@@ -104,7 +105,7 @@ const Profile = ({ navigation }) => {
             <Text style={styles.optionText}>Log out</Text>
           </View>
         </TouchableHighlight>
-        <Text>{userInfo.id}</Text>
+        
       </View>
 
 
@@ -164,6 +165,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
 
     padding: 5,
+  },
+  badge:{
+    alignSelf: 'flex-start',
+    marginLeft:5
   },
   profile_pic: {
     width: 120,

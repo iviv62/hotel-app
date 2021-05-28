@@ -1,6 +1,6 @@
 import {ApolloClient, InMemoryCache, ApolloProvider,createHttpLink} from '@apollo/client';
 import React from 'react';
-import {user,favouriteHouses, allHouses,searchedData,filteredData} from './storage';
+import {user,favouriteHouses, allHouses,searchedData,filteredData,mapCoords} from './storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setContext } from '@apollo/client/link/context';
 
@@ -12,6 +12,12 @@ const cache = new InMemoryCache({
           user: {
             read() {
               return user();
+            },
+          },
+
+          mapCoords: {
+            read() {
+              return mapCoords();
             },
           },
   

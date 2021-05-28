@@ -47,9 +47,9 @@ const EditProfile = ({navigation}) => {
     
     const { loading, error } = useQuery(GET_USER, 
         {variables:{id:id},
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
         onCompleted: data => {
-            
+            console.log(data.user);
             setEmail(data.user.email);
             setPhone(data.user.phone);
             setSurname(data.user.lastName);

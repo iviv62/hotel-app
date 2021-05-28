@@ -174,6 +174,7 @@ export const TOKEN_AUTHENTICATION = gql`
       user {
         id
         email
+        phone
         firstName
         lastName
         username
@@ -214,5 +215,26 @@ mutation($userId:Int!,$firstName:String,$phone:String,$lastName:String,$email:St
     }
   }
 }`
+
+export const CREATE_PROPERTY = gql`
+mutation createHouse($title:String!,$description:String!,$floors:Int!,$builtOn:Date!,$area:String!,$bedrooms:Int!,$bathrooms:Int!,$price:Float!,$address:String!,$location:[Float]!,$city:String!){
+  createHouse(title:$title,description:$description,floors:$floors,builtOn:$builtOn,area:$area,bedrooms:$bedrooms,bathrooms:$bathrooms,price:$price,address:$address,location:$location,city:$city){
+    house{
+      title
+      location
+      floors
+      bathrooms
+     	id
+      description
+      builtOn
+      area
+      bedrooms
+      address
+      city
+      
+    }
+  }
+}
+`
 
 
