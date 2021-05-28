@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
 } from 'react-native';
 import DetailsAdditionalInfo from './DetailsAdditionalInfo';
 import OwnerDetails from './OwnerDetails';
@@ -11,11 +12,22 @@ import Swiper from './Swiper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AboutDetails from '../../components/DetailsScreen/AboutDetails';
 import Map from "./Map"
-
+import defaultIMG from '../../images/default.jpg'
+import IconMCS from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const DetailsCard = ({
   price,bedrooms,bathrooms,floors,title,builtOn,area,
   scrollRef,description,postedBy,images,city,address, location}) => {
+
+  const url = Image.resolveAssetSource(defaultIMG).uri
+  if(images.length===0){
+      let obj={};
+      obj.image=url
+      images.push(obj);
+      console.log(images)
+    }
+
+
   return (
     <View>
       <Swiper images={images} />
@@ -38,7 +50,7 @@ const DetailsCard = ({
 
           <View style={styles.roomInfo}>
             <View style={styles.roomIcon}>
-              <Icon name="bed" color={'#ffa500'} size={25} />
+            <IconMCS name="shower" color={'#ffa500'} size={20} />
             </View>
             <Text style={styles.num}>{bathrooms}</Text>
             <Text style={styles.room}>Bathrooms</Text>

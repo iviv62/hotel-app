@@ -217,7 +217,7 @@ const  ListProperty = ({navigation}) => {
             />
             </View>
             {/*location*/}
-            <Text style={styles.h3}>Location</Text>
+            <Text style={styles.h3}>Hold you finger on the map until you mark the location</Text>
             <ListPropertyMap/>
             <TextInput
                 label="City/Village"
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
         marginTop:30,
         marginHorizontal:10,
         fontSize: 15,
+        marginBottom:10,
     },
     top:{
         marginHorizontal:10,
@@ -333,7 +334,7 @@ const styles = StyleSheet.create({
         marginHorizontal:10,
     },
     btn:{
-        marginTop:20,
+        marginVertical:20,
         marginHorizontal:"20%",
     },
 });

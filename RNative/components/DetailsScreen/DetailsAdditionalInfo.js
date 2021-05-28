@@ -24,10 +24,7 @@ const DetailsAdditionalInfo = ({floors,builtOn,area}) => {
                     <Text style={styles.detailTitle}>Floors</Text>
                     <Text style={styles.detailText} >{floors}</Text>
                 </View>
-                <View style={styles.infoColumn} >
-                    <Text style={styles.detailTitle}>Some other property</Text>
-                    <Text style={styles.detailText} >example....</Text>
-                </View>
+                
             </View>
             <View style={styles.line} />
         </View>

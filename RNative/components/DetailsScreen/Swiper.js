@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TapGestureHandler } from 'react-native-gesture-handler';
-import IconButton from '../IconButton'
+import IconButton from '../IconButton';
+
 
 const {width} = Dimensions.get('window');
 const height = width * 0.6;
@@ -22,6 +23,7 @@ const height = width * 0.6;
 const Swiper = ({images}) => {
   const navigation = useNavigation();
   const [active, setActive] = useState(0);
+
  
 
   const change = ({nativeEvent}) => {
@@ -34,6 +36,9 @@ const Swiper = ({images}) => {
       setActive(slide);
     }
   };
+
+
+
   
 
   return (
@@ -47,12 +52,17 @@ const Swiper = ({images}) => {
         showsHorizontalScrollIndicator={false}
         style={styles.container}>
         
-        {images.map((item,index) => (
+        {
+          
+          images.map((item,index) => (
           <View>
           <Image key={index} source={{uri: item.image}} style={styles.image} />
           
           </View>
-        ))}
+          )
+          
+          )
+      }
       </ScrollView>
       <View style={styles.pagination}>
         {images.map((i, k) => (
