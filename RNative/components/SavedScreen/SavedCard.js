@@ -116,7 +116,6 @@ const SavedCard = (data) => {
               <Text style={styles.room}>Bathrooms</Text>
             </View>
           </View>
-          <View style={styles.line} />
         </View>
       </View>
     </TouchableOpacity>

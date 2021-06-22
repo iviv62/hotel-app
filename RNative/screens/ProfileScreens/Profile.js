@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 import { Button, Paragraph, Dialog, Portal,Badge } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FA5Icon from 'react-native-vector-icons/FontAwesome5';
 import * as myConstClass from '../../constants/constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {user,favouriteHouses, allHouses,searchedData,filteredData} from '../../constants/storage';
@@ -76,6 +77,15 @@ const Profile = ({ navigation }) => {
             <Icon name="add-circle-outline" color={'#ffa500'} size={26} />
             <Text style={styles.optionText}>List property</Text>
             <Badge style={styles.badge}>Beta</Badge>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          onPress={() => alert("Under development")}>
+          <View style={styles.option}>
+            <FA5Icon name="house-user" color={'#ffa500'} size={26} />
+            <Text style={styles.optionText}>My listed properties</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight

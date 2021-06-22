@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Pressable,
+  Image
 } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { MAPBOX_KEY } from '../../constants/env/secretKeys';
@@ -16,13 +17,15 @@ import { useQuery, gql } from '@apollo/client';
 import MapCard from '../../components/ExploreScreen/MapCard';
 import AnimatedIconButton from '../../components/AnimatedIconButton';
 import {user,favouriteHouses, allHouses,searchedData,filteredData} from './../../constants/storage';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
+import IconButton from '../../components/IconButton';
+import defaultIMG from '../../images/default.jpg';
 
 MapboxGL.setAccessToken(MAPBOX_KEY);
 
 MapboxGL.setConnected(true);
 
 const MapScreen = (props) => {
+  const img = Image.resolveAssetSource(defaultIMG).uri
   let cardData = {};
   const [active, setActive] = useState(false);
   const [overlayItem, setOverlayItem] = useState(cardData);
@@ -35,15 +38,15 @@ const MapScreen = (props) => {
         {
           title: 'Location Permission',
           message:
-            'Cool Photo App needs access to your camera ' +
-            'so you can take awesome pictures.',
+            'Property Mart wants to use your location' +
+            'so it can give you properties near you.',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'OK',
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the map');
+       
         setLocationPermission(true);
       } else {
         console.log('map permission denied');
@@ -97,12 +100,10 @@ const MapScreen = (props) => {
               }}>
               <View
                 style={{ position: 'absolute', top: 5, right: 5, zIndex: 10 }}>
-                <AnimatedIconButton
-                  namePrimary={'close-circle'}
-                  nameSecondary={'close-circle'}
-                  colorPrimary={'black'}
-                  colorSecondary={'black'}
-                  func={handleDeselect}
+                <IconButton
+                  name={'cancel'}
+                  color={'black'}
+                  onSelect={handleDeselect}
                   size={25}
                 />
               </View>
@@ -111,7 +112,7 @@ const MapScreen = (props) => {
                 price={overlayItem.price}
                 address={overlayItem.address}
                 address={overlayItem.address}
-                image={overlayItem.otherImages[0].image}
+                image={typeof overlayItem.otherImages[0] != "undefined"? overlayItem.otherImages[0].image:img}
                 city={overlayItem.city}
                 location={overlayItem.location}
                 onSelect={() =>

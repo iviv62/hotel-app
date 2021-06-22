@@ -18,6 +18,7 @@ import * as utils from  '../../../constants/utils';
 import * as clientClass from '../../../constants/client-cache';
 
 let reloadData = utils.getDataOnLoadingScreen
+let reloadExploreData = utils.reloadExploreScreenData
 let client=clientClass.client
 let authLink=clientClass.authLink
 let httpLink = clientClass.httpLink
@@ -54,7 +55,8 @@ const LoginScreen = () => {
     client.setLink(
       authLink.concat(httpLink)
     )  
-    reloadData()
+    reloadData();
+    reloadExploreData();
 
   };
 

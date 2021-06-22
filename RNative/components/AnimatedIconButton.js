@@ -26,7 +26,6 @@ const AnimatedIconButton = ({namePrimary,nameSecondary, colorPrimary,colorSecond
 
     useEffect(() => {
       setActive(Active)
-      console.log("yup")
     }, [allHouses()]);
     
 

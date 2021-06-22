@@ -14,7 +14,7 @@ export const getDataOnLoadingScreen= async()=>{
        console.log(error);
     });
     
-    let responseAll =await client.query({query:ALL_HOUSES}).then((data) => {
+    let responseAll =await client.query({query:ALL_HOUSES,fetchPolicy: 'network-only'}).then((data) => {
       //save in reactive variable
 
       
